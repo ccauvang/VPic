@@ -6,6 +6,7 @@ html {
 body {
   margin: 0 auto;
   padding: 0;
+  background-color: black;
 }
 
 :root {
@@ -201,9 +202,10 @@ body {
 .int:focus~.shout, .int:valid~.shout {
   top: -50%;
   transform: scale(1.03);
-  background: -webkit-linear-gradient(45deg, hotpink 15%, purple 35%, #00ff95 90%); 
+  /*background: -webkit-linear-gradient(45deg, hotpink 15%, purple 35%, #00ff95 90%); 
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;*/
+  color: #71B3AC;
   font-weight: 600;
   letter-spacing: 2px;
 }
@@ -233,7 +235,7 @@ body {
 
 .int:focus ~ .line, .int:valid ~ .line {
   background: linear-gradient(45deg, hotpink 15%, purple 35%, #00ff95 90%);
-}  
+}
 
 @media only screen and (min-width: 800px) {
   html, body {
@@ -263,3 +265,4 @@ body {
   }
 }
 
+/*create switch dark mode*/

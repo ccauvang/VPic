@@ -122,13 +122,12 @@ const rerollImage = (side) => {
 
   if (side == 'L') {
     //console.log(side);
-    //status = true;
+    status = true;
 
     if (status == true) {
       fooR = 1;
       if (fooL == 1) {
         ran >= max ? ran = 0 : ran++
-
         fooL = 0
       };
       console.log(ran, 'L');
@@ -140,7 +139,7 @@ const rerollImage = (side) => {
     };
   } else {
     //console.log(side);
-    //status = true;
+    status = true;
 
     if (status == true) {
       fooL = 1;
@@ -163,9 +162,10 @@ const getInputNun = document.getElementsByClassName('int')[0];
 let subm = () => {
   if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < max +1) && (getInputNun.value > -1)) {
     setImage(getInputNun.value);
+    ran = getInputNun.value
     getInputNun.value = '';
   } else {
-    rerollImage('R');
+    //rerollImage('R');
     getInputNun.value = '';
     getInputNun.setCustomValidity("Hello");
   }
