@@ -207,5 +207,5 @@ $(document).ready(function() {
 console.timeEnd('j');
 /*console._log = console.log 
 console.log = function (log) { 
-  return console._log(`%c ${log}`, 'font-size:0px;'); 
+  return console._log(`%c ${log}`, 'font-size:0px;');
 }*/
