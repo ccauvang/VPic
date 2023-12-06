@@ -114,7 +114,7 @@ if (getFoo == null) {
 console.timeEnd('l');
 
 function setImage(value) {
-  contn.style.backgroundImage = `url(../image/pic${getFoo == null ? songs[value] : getFoo[value]}.png)`;
+  contn.style.backgroundImage = `url(image/pic${getFoo == null ? songs[value] : getFoo[value]}.png)`;
   //document.querySelector('title').textContent = `${getFoo[value]}`;
 };
 
@@ -135,7 +135,7 @@ const rerollImage = (side) => {
       ran >= max ? ran = 0 : ran++
     }
     if (status == false && contn.style.backgroundImage.slice(8, -2) != 'river.png') {
-      contn.style.backgroundImage = `url(../river.png)`;
+      contn.style.backgroundImage = `url(river.png)`;
     };
   } else {
     //console.log(side);
@@ -152,7 +152,7 @@ const rerollImage = (side) => {
       setImage(ran);
     }
     if (status == false && contn.style.backgroundImage.slice(8, -2) != 'river.png') {
-      contn.style.backgroundImage = `url(../river.png)`;
+      contn.style.backgroundImage = `url(river.png)`;
     }
   };
 };
