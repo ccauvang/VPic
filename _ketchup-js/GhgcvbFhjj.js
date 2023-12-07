@@ -42,7 +42,7 @@ console.time('j');
 
 const lines = document.getElementsByClassName('lines');
 const warpRegex = /warp=.*/,
-      ipRegex = /ip=.*/;
+  ipRegex = /ip=.*/;
 let status = null;
 
 async function fet() {
@@ -120,17 +120,17 @@ function setImage(value) {
 
 const rerollImage = (side) => {
 
-  if (side == 'L') {
+  if (side == 'R') {
     //console.log(side);
     status = true;
 
     if (status == true) {
-      fooR = 1;
-      if (fooL == 1) {
+      fooL = true;
+      if (fooR == true) {
         ran >= max ? ran = 0 : ran++
-        fooL = 0
+        fooR = false
       };
-      console.log(ran, 'L');
+      console.log(ran, 'R');
       setImage(ran);
       ran >= max ? ran = 0 : ran++
     }
@@ -142,13 +142,13 @@ const rerollImage = (side) => {
     status = true;
 
     if (status == true) {
-      fooL = 1;
-      if (fooR == 1) {
+      fooR = true;
+      if (fooL == true) {
         ran < 1 ? ran = max : ran--
-        fooR = 0
+        fooL = false
       };
       ran < 1 ? ran = max : ran--
-      console.log(ran, 'R');
+      console.log(ran, 'L');
       setImage(ran);
     }
     if (status == false && contn.style.backgroundImage.slice(8, -2) != 'river.png') {
@@ -160,16 +160,29 @@ const rerollImage = (side) => {
 const getInputNun = document.getElementsByClassName('int')[0];
 
 let subm = () => {
-  if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < max +1) && (getInputNun.value > -1)) {
-    setImage(getInputNun.value);
-    ran = getInputNun.value
+  if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < max + 1) && (getInputNun.value > -1)) {
+    //console.log(ran, 'lon');
+    if (ran === Number(getInputNun.value)) {
+      ran == max ? ran-- : ran++;
+      console.log(ran, 'B+');
+      //console.log(ran);
+    } else {
+      if (fooL == true) {
+        ran = Number(getInputNun.value) + 1;
+        fooR = true
+      } else {
+        ran = Number(getInputNun.value);
+      }
+      console.log(ran, 'B');
+    };
+    setImage(ran);
     getInputNun.value = '';
   } else {
     //rerollImage('R');
     getInputNun.value = '';
     getInputNun.setCustomValidity("Hello");
   }
-}; 
+};
 
 //console.log(JSON.parse(localStorage.getItem('foo')));
 
@@ -191,9 +204,9 @@ let subm = () => {
 let dangerouExit = (n) => {
   if (contn.style.backgroundImage.slice(8, -2) != 'river.png') {
     console.log(contn.style.backgroundImage.slice(8, -2));
-      contn.style.backgroundImage = `url(river.png)`;
-      //contn.style.filter = 'brightness(0)'
-      console.log(n);
+    contn.style.backgroundImage = `url(river.png)`;
+    //contn.style.filter = 'brightness(0)'
+    console.log(n);
   };
   //window.location.href = 'http://localhost:7700/lndex.html'
 };
