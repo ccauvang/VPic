@@ -91,9 +91,10 @@ let fooL, fooR = 0;
 const contn = document.getElementById('container');
 console.time('l');
 
-const getFoo = JSON.parse(sessionStorage.getItem('foo'));
+//let getFoo = JSON.parse(sessionStorage.getItem('foo'));
 
-//const getFoo = JSON.parse(localStorage.getItem('foo'));
+let getFoo = JSON.parse(localStorage.getItem('foo'));
+
 let songs = [];
 
 if (getFoo == null) {
@@ -107,10 +108,15 @@ if (getFoo == null) {
     const j = Math.trunc(Math.random() * i);
     [songs[i], songs[j]] = [songs[j], songs[i]];
   };
-  //localStorage.setItem('foo', JSON.stringify(songs));
-  sessionStorage.setItem('foo', JSON.stringify(songs));
+  localStorage.setItem('foo', JSON.stringify(songs));
+  //sessionStorage.setItem('foo', JSON.stringify(songs));
   //console.log('%csetLocalStorage', 'font-size: 30px; background: -webkit-linear-gradient(45deg, hotpink 5%, purple 35%, #00ff95 99%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:500;');
 };
+
+//let getFoo = JSON.parse(sessionStorage.getItem('foo'));
+
+getFoo = JSON.parse(localStorage.getItem('foo'));
+ 
 console.timeEnd('l');
 
 function setImage(value) {
@@ -134,7 +140,7 @@ const rerollImage = (side) => {
       setImage(ran);
       ran >= max ? ran = 0 : ran++
     }
-    if (status == false && contn.style.backgroundImage.slice(8, -2) != 'river.png') {
+    if (status == false && contn.style.backgroundImage.slice(5, -2) != 'river.png') {
       contn.style.backgroundImage = `url(river.png)`;
     };
   } else {
@@ -151,7 +157,7 @@ const rerollImage = (side) => {
       console.log(ran, 'L');
       setImage(ran);
     }
-    if (status == false && contn.style.backgroundImage.slice(8, -2) != 'river.png') {
+    if (status == false && contn.style.backgroundImage.slice(5, -2) != 'river.png') {
       contn.style.backgroundImage = `url(river.png)`;
     }
   };
@@ -162,7 +168,7 @@ const getInputNun = document.getElementsByClassName('int')[0];
 let subm = () => {
   if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < max + 1) && (getInputNun.value > -1)) {
     //console.log(ran, 'lon');
-    if (ran === Number(getInputNun.value)) {
+    /*if (ran === Number(getInputNun.value)) {
       ran == max ? ran-- : ran++;
       console.log(ran, 'B+');
       //console.log(ran);
@@ -175,7 +181,9 @@ let subm = () => {
       }
       console.log(ran, 'B');
     };
-    setImage(ran);
+    
+    setImage(ran);*/
+    setImage(Number(getInputNun.value));
     getInputNun.value = '';
   } else {
     //rerollImage('R');
@@ -202,8 +210,8 @@ let subm = () => {
 //console.log(songs);
 
 let dangerouExit = (n) => {
-  if (contn.style.backgroundImage.slice(8, -2) != 'river.png') {
-    console.log(contn.style.backgroundImage.slice(8, -2));
+  if (contn.style.backgroundImage.slice(5, -2) != 'river.png') {
+    console.log(contn.style.backgroundImage.slice(12, -2));
     contn.style.backgroundImage = `url(river.png)`;
     //contn.style.filter = 'brightness(0)'
     console.log(n);
