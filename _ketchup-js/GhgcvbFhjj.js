@@ -230,3 +230,20 @@ console.timeEnd('j');
 console.log = function (log) { 
   return console._log(`%c ${log}`, 'font-size:0px;');
 }*/
+
+/*function init() {
+  const windows = window.open(`https://${window.location.hostname}`, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+  var pollTimer = window.setInterval(function() {
+    if (windows.closed !== false) { // !== is required for compatibility with Opera
+        window.clearInterval(pollTimer);
+        init()
+    }
+}, 200);
+
+}
+
+init()*/
+/*setInterval(() => {
+fetch('').then(res => res.text()).then(data => {
+  document.body.innerHTML = data;
+}).catch(err => console.log(err)) }, 5000);*/
