@@ -172,7 +172,7 @@ getInputNun.addEventListener('input', () => {
 });
 
 let subm = () => {
-  if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < max + 1) && (getInputNun.value > -1)) {
+  if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < max + 1) && (getInputNun.value > 0)) {
     //console.log(ran, 'lon');
     /*if (ran === Number(getInputNun.value)) {
       ran == max ? ran-- : ran++;
@@ -194,7 +194,6 @@ let subm = () => {
   } else {
     //rerollImage('R');
     getInputNun.value = '';
-    getInputNun.setCustomValidity("Hello");
   };
 };
 
