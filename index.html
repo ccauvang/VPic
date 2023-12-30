@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <!-- user-scalable=no -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link rel="icon" type="image/x-icon" href="npm-ic.png">
   <title>VPic</title>
@@ -13,21 +14,22 @@
 <body>
   <div id="container">
     <div class="lines">internet=off</div>
-    <button id="btnL" class="btn" onclick="rerollImage('L')">
+    <button id="btnL" class="btn" title="buttonLeft" onclick="rerollImage('L')">
       <p id="blog-btnL" class="blog-btn"></p>
     </button>
-    <button id="btnR" class="btn" onclick="rerollImage('R')">
+    <button id="btnR" class="btn" title="buttonRight" onclick="rerollImage('R')">
       <p id="blog-btnR" class="blog-btn"></p>
     </button>
-    <button id="btnT" class="btn" onclick="dangerouExit('exit')">
+    <button id="btnT" class="btn" title="bouttonTop" onclick="dangerouExit('exit')">
       <p id="blog-btnT" class="blog-btn"></p>
     </button>
 
     <div class="intp">
-      <input type="number" name="lol" class="int" required min="0">
+      
+      <input type="number" id="lol" class="int" required min="0">
+      <label for="lol" class="shout">Hello</label>
       <div class="line"></div>
       <button type="submit" class="btn-sub" onclick="subm()">Hello World</button>
-      <label for="lol" class="shout">Hello</label>
     </div>
 
     <svg id="chargLight">

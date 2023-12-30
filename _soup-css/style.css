@@ -204,17 +204,6 @@ html, body {
   transition: 0.4s;
 }
 
-.intp :is(.int:focus, .int:valid)~.shout {
-  top: -50%;
-  transform: scale(1.03);
-  /*background: -webkit-linear-gradient(45deg, hotpink 15%, purple 35%, #00ff95 90%); 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;*/
-  color: #5297D1;
-  font-weight: 600;
-  letter-spacing: 2px;
-}
-
 .shout {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -223,7 +212,7 @@ html, body {
   user-select: none;
   
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   top: 25%;
   left: 5px;
   color: #267923;
@@ -233,6 +222,17 @@ html, body {
   -moz-transition: 0.3s ease all;
   -webkit-transition: 0.3s ease all;
 }
+
+.intp :is(.int:focus, .int:valid)~.shout {
+  top: -50%;
+  transform: scale(1.03);
+  /*background: -webkit-linear-gradient(45deg, hotpink 15%, purple 35%, #00ff95 90%); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;*/
+  color: #5297D1;
+  font-weight: 600;
+  letter-spacing: 2px;
+} 
 
 .line {
   position: absolute;
