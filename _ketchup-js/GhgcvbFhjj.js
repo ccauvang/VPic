@@ -165,6 +165,12 @@ const rerollImage = (side) => {
 
 const getInputNun = document.getElementsByClassName('int')[0];
 
+getInputNun.addEventListener('input', () => {
+     if (!getInputNun.checkValidity()) {
+       getInputNun.value = '';
+     };
+});
+
 let subm = () => {
   if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < max + 1) && (getInputNun.value > -1)) {
     //console.log(ran, 'lon');
@@ -183,13 +189,13 @@ let subm = () => {
     };
     
     setImage(ran);*/
-    setImage(Number(getInputNun.value));
+    setImage(Math.trunc(Number(getInputNun.value)));
     getInputNun.value = '';
   } else {
     //rerollImage('R');
     getInputNun.value = '';
     getInputNun.setCustomValidity("Hello");
-  }
+  };
 };
 
 //console.log(JSON.parse(localStorage.getItem('foo')));

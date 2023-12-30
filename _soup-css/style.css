@@ -18,7 +18,7 @@ html, body {
 #container {
   margin: 0 auto;
   padding: 0;
-  position: absolute;
+  position: relative;
   height: 100%;
   background-image: url(../river.png);
   /*display: flex;
@@ -99,7 +99,7 @@ html, body {
 
 #btnL {
   top: 20%;
-  width: 110px;
+  width: 30vw;
   height: 70%;
   padding: 10px;
   transition-duration: 0.3s;
@@ -113,7 +113,7 @@ html, body {
 #btnR {
   top: 20%;
   right: 0;
-  width: 110px;
+  width: 30vw;
   height: 70%;
   padding: 10px;
   transition-duration: 0.3s;
@@ -204,7 +204,7 @@ html, body {
   transition: 0.4s;
 }
 
-.int:focus~.shout, .int:valid~.shout {
+.intp :is(.int:focus, .int:valid)~.shout {
   top: -50%;
   transform: scale(1.03);
   /*background: -webkit-linear-gradient(45deg, hotpink 15%, purple 35%, #00ff95 90%); 
@@ -243,17 +243,13 @@ html, body {
 }
 
 @media only screen and (min-width: 800px) {
-  body {
-    width: 100vw;
-    height: 100vh;
-  }
   
   #chargLight {
     right: 306px;
   }
   
   #container {
-    height: 100%;
+    height: 100vh;
     width: 100vw;
   }
 }
@@ -262,7 +258,7 @@ html, body {
   
   #container {
     width: 100%;
-    height: 744px;
+    height: 100dvh;
   }
 }
 
