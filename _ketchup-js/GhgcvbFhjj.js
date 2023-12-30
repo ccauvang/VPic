@@ -67,10 +67,10 @@ async function fet() {
       const charg = battery.charging;
       if (charg) {
         document.getElementById('light').style.fill = 'green';
-        console.log(1);
+        //console.log(1);
         status = true
       } else {
-        console.log(2);
+        //console.log(2);
         document.getElementById('light').style.fill = 'red';
         status = false
       }
@@ -85,43 +85,40 @@ async function fet() {
 };
 fet()
 
-let ran = 0;
-const max = 15;
-let fooL, fooR = 0;
-const contn = document.getElementById('container');
+let currentImage = 0;
+const maxImage = 15;
+let sideLeft, sideRight;
+const container = document.getElementById('container');
 console.time('l');
 
-//let getFoo = JSON.parse(sessionStorage.getItem('foo'));
+let imageQueue = [];
+const max1 = maxImage + 1;
 
-let getFoo = JSON.parse(localStorage.getItem('foo'));
-
-let songs = [];
-
-if (getFoo == null) {
-  for (let num = 0; num < max + 1; num++) {
-    songs.push(num);
+if (localStorage.getItem('imageStorage') == null) {
+  for (let num = 0; num < max1 ; num++) {
+    imageQueue.push(num);
   };
 
-  //let songs = [...Array(1997).keys()];
-  let i = songs.length - 1;
+  //let imageQueue = [...Array(1997).keys()];
+  let i = imageQueue.length - 1;
   for (; i >= 0; i--) {
     const j = Math.trunc(Math.random() * i);
-    [songs[i], songs[j]] = [songs[j], songs[i]];
+    [imageQueue[i], imageQueue[j]] = [imageQueue[j], imageQueue[i]];
   };
-  localStorage.setItem('foo', JSON.stringify(songs));
-  //sessionStorage.setItem('foo', JSON.stringify(songs));
+  localStorage.setItem('imageStorage', JSON.stringify(imageQueue));
+  //sessionStorage.setItem('imageStorage', JSON.stringify(imageQueue));
   //console.log('%csetLocalStorage', 'font-size: 30px; background: -webkit-linear-gradient(45deg, hotpink 5%, purple 35%, #00ff95 99%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:500;');
 };
 
-//let getFoo = JSON.parse(sessionStorage.getItem('foo'));
+// imageQueue = JSON.parse(sessionStorage.getItem('imageStorage'));
 
-getFoo = JSON.parse(localStorage.getItem('foo'));
+imageQueue = JSON.parse(localStorage.getItem('imageStorage'));
  
 console.timeEnd('l');
 
 function setImage(value) {
-  contn.style.backgroundImage = `url(_image/pic${getFoo == null ? songs[value] : getFoo[value]}.png)`;
-  //document.querySelector('title').textContent = `${getFoo[value]}`;
+  container.style.backgroundImage = `url(_image/pic${imageQueue == null ? 0 : imageQueue[value]}.png)`;
+  //document.querySelector('title').textContent = `${imageQueue[value]}`;
 };
 
 const rerollImage = (side) => {
@@ -131,34 +128,34 @@ const rerollImage = (side) => {
     status = true;
 
     if (status == true) {
-      fooL = true;
-      if (fooR == true) {
-        ran >= max ? ran = 0 : ran++
-        fooR = false
+      sideLeft = true;
+      if (sideRight == true) {
+        currentImage >= maxImage ? currentImage = 0 : currentImage++
+        sideRight = false
       };
-      console.log(ran, 'R');
-      setImage(ran);
-      ran >= max ? ran = 0 : ran++
+      console.log(currentImage, 'R');
+      setImage(currentImage);
+      currentImage >= maxImage ? currentImage = 0 : currentImage++
     }
-    if (status == false && contn.style.backgroundImage.slice(5, -2) != 'river.png') {
-      contn.style.backgroundImage = `url(river.png)`;
+    if (status == false && container.style.backgroundImage.slice(5, -2) != 'river.png') {
+      container.style.backgroundImage = `url(river.png)`;
     };
   } else {
     //console.log(side);
     status = true;
 
     if (status == true) {
-      fooR = true;
-      if (fooL == true) {
-        ran < 1 ? ran = max : ran--
-        fooL = false
+      sideRight = true;
+      if (sideLeft == true) {
+        currentImage <= 0 ? currentImage = maxImage : currentImage--
+        sideLeft = false
       };
-      ran < 1 ? ran = max : ran--
-      console.log(ran, 'L');
-      setImage(ran);
+      currentImage <= 0 ? currentImage = maxImage : currentImage--
+      console.log(currentImage, 'L');
+      setImage(currentImage);
     }
-    if (status == false && contn.style.backgroundImage.slice(5, -2) != 'river.png') {
-      contn.style.backgroundImage = `url(river.png)`;
+    if (status == false && container.style.backgroundImage.slice(5, -2) != 'river.png') {
+      container.style.backgroundImage = `url(river.png)`;
     }
   };
 };
@@ -172,23 +169,23 @@ getInputNun.addEventListener('input', () => {
 });
 
 let subm = () => {
-  if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < max + 1) && (getInputNun.value > 0)) {
-    //console.log(ran, 'lon');
-    /*if (ran === Number(getInputNun.value)) {
-      ran == max ? ran-- : ran++;
-      console.log(ran, 'B+');
-      //console.log(ran);
+  if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < maxImage + 1) && (getInputNun.value > 0)) {
+    //console.log(currentImage, 'lon');
+    /*if (currentImage === Number(getInputNun.value)) {
+      currentImage == maxImage ? currentImage-- : currentImage++;
+      console.log(currentImage, 'B+');
+      //console.log(currentImage);
     } else {
-      if (fooL == true) {
-        ran = Number(getInputNun.value) + 1;
-        fooR = true
+      if (sideLeft == true) {
+        currentImage = Number(getInputNun.value) + 1;
+        sideRight = true
       } else {
-        ran = Number(getInputNun.value);
+        currentImage = Number(getInputNun.value);
       }
-      console.log(ran, 'B');
+      console.log(currentImage, 'B');
     };
     
-    setImage(ran);*/
+    setImage(currentImage);*/
     setImage(Math.trunc(Number(getInputNun.value)));
     getInputNun.value = '';
   } else {
@@ -197,7 +194,7 @@ let subm = () => {
   };
 };
 
-//console.log(JSON.parse(localStorage.getItem('foo')));
+//console.log(JSON.parse(localStorage.getItem('imageStorage')));
 
 /*caches.open("v2").then((cache) => {
   cache.add('image/pic0.jpg')
@@ -208,17 +205,17 @@ let subm = () => {
 //console.log(window.caches.delete('v1'));
 
 /*fetch("image/pic0.jpg", {cache: "force-cache"})
-  .then(data => console.log(contn.style.backgroundImage = `url(${data.url})`))
+  .then(data => console.log(container.style.backgroundImage = `url(${data.url})`))
   .catch(err => console.log(err));*/
 
 //
-//console.log(songs);
+//console.log(imageQueue);
 
 let dangerouExit = (n) => {
-  if (contn.style.backgroundImage.slice(5, -2) != 'river.png') {
-    console.log(contn.style.backgroundImage.slice(12, -2));
-    contn.style.backgroundImage = `url(river.png)`;
-    //contn.style.filter = 'brightness(0)'
+  if (container.style.backgroundImage.slice(5, -2) != 'river.png') {
+    console.log(container.style.backgroundImage.slice(12, -2));
+    container.style.backgroundImage = `url(river.png)`;
+    //container.style.filter = 'brightness(0)'
     console.log(n);
   };
   //window.location.href = 'http://localhost:7700/lndex.html'
@@ -231,7 +228,9 @@ $(document).ready(function() {
 });
 
 console.timeEnd('j');
-/*console._log = console.log 
+
+
+/*console._log = console.log
 console.log = function (log) { 
   return console._log(`%c ${log}`, 'font-size:0px;');
 }*/
