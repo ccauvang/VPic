@@ -1,3 +1,13 @@
+/*function erud() { 
+  var script = document.createElement('script'); 
+  script.src="https://cdn.jsdelivr.net/npm/eruda"; 
+  document.body.appendChild(script);
+  script.onload = function () {
+    eruda.init();
+  };
+};
+erud();*/
+
 //console.log(fetching)
 
 /*function work(time, column, hist) {
@@ -89,16 +99,16 @@ let currentImage = 0;
 const maxImage = 15;
 let sideLeft, sideRight;
 const container = document.getElementById('container');
-console.time('l');
+//console.time('l');
 
 let imageQueue = [];
-const max1 = maxImage + 1;
+
 
 if (localStorage.getItem('imageStorage') == null) {
-  for (let num = 0; num < max1 ; num++) {
-    imageQueue.push(num);
+  for (var num = maxImage; num >= 0; num--) {
+    imageQueue.unshift(num);
   };
-
+//console.log(imageQueue);
   //let imageQueue = [...Array(1997).keys()];
   let i = imageQueue.length - 1;
   for (; i >= 0; i--) {
@@ -113,8 +123,8 @@ if (localStorage.getItem('imageStorage') == null) {
 // imageQueue = JSON.parse(sessionStorage.getItem('imageStorage'));
 
 imageQueue = JSON.parse(localStorage.getItem('imageStorage'));
- 
-console.timeEnd('l');
+
+//console.timeEnd('l');
 
 function setImage(value) {
   container.style.backgroundImage = `url(_image/pic${imageQueue == null ? 0 : imageQueue[value]}.png)`;
@@ -163,9 +173,9 @@ const rerollImage = (side) => {
 const getInputNun = document.getElementsByClassName('int')[0];
 
 getInputNun.addEventListener('input', () => {
-     if (!getInputNun.checkValidity()) {
-       getInputNun.value = '';
-     };
+  if (!getInputNun.checkValidity()) {
+    getInputNun.value = '';
+  };
 });
 
 let subm = () => {
@@ -221,7 +231,7 @@ let dangerouExit = (n) => {
   //window.location.href = 'http://localhost:7700/lndex.html'
 };
 
-//document.cookie = ('lol abb')
+//document.cookie = ()
 
 $(document).ready(function() {
   $('script').remove();
@@ -232,7 +242,7 @@ console.timeEnd('j');
 
 /*console._log = console.log
 console.log = function (log) { 
-  return console._log(`%c ${log}`, 'font-size:0px;');
+  return console._log(`%c${log}`, 'font-size:0px;');
 }*/
 
 /*function init() {
@@ -251,3 +261,56 @@ init()*/
 fetch('').then(res => res.text()).then(data => {
   document.body.innerHTML = data;
 }).catch(err => console.log(err)) }, 5000);*/
+
+/*function durationCountFormat(inputTimeSecond) {
+  if (typeof inputTimeSecond != 'number') throw Error('input allowed only number');
+  let timeRaw = [];
+  const timeYears = Math.floor(inputTimeSecond / 31536e3);
+  if (timeYears != Infinity) {
+  const timeDays = Math.floor((inputTimeSecond % 31536e3) / 86400);
+  const timeHours = Math.floor(((inputTimeSecond % 31536e3) % 86400) / 3600);
+  const timeMinutes = Math.floor((((inputTimeSecond % 31536e3) % 86400) % 3600) / 60);
+  const timeSeconds = Math.floor((((inputTimeSecond % 31536e3) % 86400) % 3600) % 60);
+
+   timeRaw = [
+          [timeYears, 'năm'],
+          [timeDays, 'ngày'],
+          [timeHours, 'giờ'],
+          [timeMinutes, 'phút'],
+          [timeSeconds, 'giây'],
+        ];
+} else {
+   timeRaw = [['Infinity WTF ARE YOU OK?', '']];
+}
+
+  let outputTimeFormat = '';
+
+  timeRaw.forEach(timePice => {
+    if (timePice[0] != 0) {
+      outputTimeFormat += ' ' + timePice[0] + ' ' + timePice[1];
+    }
+    //console.log(outputTimeFormat.trim())
+  });
+  return outputTimeFormat.trim();
+};
+
+console.log(durationCountFormat(3));*/
+
+/*var a = Array(9e8);
+var x = a.length
+
+console.time('testing_forward');
+for (var i = 0; i < x; i++);
+console.timeEnd('testing_forward');
+
+console.time('testing_backwards');
+for (var i = a.length - 1; i >= 0; i--);
+console.timeEnd('testing_backwards');
+
+console.time('testing_while');
+var j = x
+while (j >= 0) {
+  j--
+};
+console.timeEnd('testing_while');*/
+
