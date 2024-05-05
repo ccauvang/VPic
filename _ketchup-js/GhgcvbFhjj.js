@@ -17,7 +17,7 @@ erud();*/
       rand = Math.floor(Math.random() * wordlength);
       rand2 = Math.floor(Math.random() * 19);
      let word = words[rand];
-      lines[rand2].innerHTML = hist + ' ' + word;
+      internetStatus[rand2].innerHTML = hist + ' ' + word;
       hist += ' ' + word;
       if (i == 39) {
         //hist = '';
@@ -31,7 +31,7 @@ erud();*/
 
 }
 work(100, 3, '');*/
-//Object.keys(lines).forEach(lol => {
+//Object.keys(internetStatus).forEach(lol => {
 /*setInterval(() => {
   work(100, 3, '');
 }, 10000);*/
@@ -50,7 +50,7 @@ work(100, 3, '');*/
 //document.getElementById('blog-btnR').innerHTML = ' ';
 console.time('j');
 
-const lines = document.getElementsByClassName('lines');
+const internetStatus = document.getElementsByClassName('internetStatus');
 const warpRegex = /warp=.*/,
   ipRegex = /ip=.*/;
 let status = null;
@@ -61,12 +61,12 @@ async function fet() {
     const resIp = text.match(ipRegex)[0];
     const resWarp = text.match(warpRegex)[0];
     if (resWarp == 'warp=on') {
-      lines[0].innerHTML = `YOUR IP ADDRESS ${resIp} ${resWarp}`
-      //lines[0].onclick = function() {puss()};
+      internetStatus[0].innerHTML = `YOUR IP ADDRESS ${resIp} ${resWarp}`
+      //internetStatus[0].onclick = function() {puss()};
       status = true;
     } else {
-      lines[0].innerHTML = `internet=on`
-      //lines[0].onclick = function() {org()};
+      internetStatus[0].innerHTML = `internet=on`
+      //internetStatus[0].onclick = function() {org()};
       status = false;
     }
 
@@ -97,8 +97,10 @@ fet()
 
 let currentImage = 0;
 const maxImage = 15;
+const minImage = 0;
 let sideLeft, sideRight;
 const container = document.getElementById('container');
+const currentImgDiv = document.getElementsByClassName('currentImage')
 //console.time('l');
 
 let imageQueue = [];
@@ -108,7 +110,7 @@ if (localStorage.getItem('imageStorage') == null) {
   for (var num = maxImage; num >= 0; num--) {
     imageQueue.unshift(num);
   };
-//console.log(imageQueue);
+  //console.log(imageQueue);
   //let imageQueue = [...Array(1997).keys()];
   let i = imageQueue.length - 1;
   for (; i >= 0; i--) {
@@ -127,11 +129,18 @@ imageQueue = JSON.parse(localStorage.getItem('imageStorage'));
 //console.timeEnd('l');
 
 function setImage(value) {
+  currentImgDiv[0].innerHTML = currentImage;
+
   container.style.backgroundImage = `url(_image/pic${imageQueue == null ? 0 : imageQueue[value]}.png)`;
   //document.querySelector('title').textContent = `${imageQueue[value]}`;
 };
 
 const rerollImage = (side) => {
+
+  if (status == false && container.style.backgroundImage.slice(5, -2) != 'river.png') {
+    currentImgDiv[0].innerHTML = 'defaul';
+    container.style.backgroundImage = `url(river.png)`;
+  }
 
   if (side == 'R') {
     //console.log(side);
@@ -139,68 +148,64 @@ const rerollImage = (side) => {
 
     if (status == true) {
       sideLeft = true;
+
       if (sideRight == true) {
         currentImage >= maxImage ? currentImage = 0 : currentImage++
         sideRight = false
       };
+
       console.log(currentImage, 'R');
       setImage(currentImage);
       currentImage >= maxImage ? currentImage = 0 : currentImage++
-    }
-    if (status == false && container.style.backgroundImage.slice(5, -2) != 'river.png') {
-      container.style.backgroundImage = `url(river.png)`;
     };
+
   } else {
     //console.log(side);
     status = true;
 
     if (status == true) {
       sideRight = true;
+
       if (sideLeft == true) {
         currentImage <= 0 ? currentImage = maxImage : currentImage--
         sideLeft = false
       };
+
       currentImage <= 0 ? currentImage = maxImage : currentImage--
       console.log(currentImage, 'L');
       setImage(currentImage);
-    }
-    if (status == false && container.style.backgroundImage.slice(5, -2) != 'river.png') {
-      container.style.backgroundImage = `url(river.png)`;
-    }
+    };
   };
 };
 
-const getInputNun = document.getElementsByClassName('int')[0];
+const getInputNum = document.getElementsByClassName('int')[0];
 
-getInputNun.addEventListener('input', () => {
-  if (!getInputNun.checkValidity()) {
-    getInputNun.value = '';
+getInputNum.addEventListener('input', () => {
+  if (!getInputNum.checkValidity()) {
+    getInputNum.value = '';
   };
 });
 
 let subm = () => {
-  if (getInputNun.value != '' && !isNaN(getInputNun.value) && (getInputNun.value < maxImage + 1) && (getInputNun.value > 0)) {
-    //console.log(currentImage, 'lon');
-    /*if (currentImage === Number(getInputNun.value)) {
-      currentImage == maxImage ? currentImage-- : currentImage++;
-      console.log(currentImage, 'B+');
-      //console.log(currentImage);
-    } else {
-      if (sideLeft == true) {
-        currentImage = Number(getInputNun.value) + 1;
-        sideRight = true
-      } else {
-        currentImage = Number(getInputNun.value);
-      }
-      console.log(currentImage, 'B');
+  if (getInputNum.value != '' && !isNaN(getInputNum.value) && (getInputNum.value <= maxImage) && (getInputNum.value >= 0)) {
+    console.log(currentImage, 'subMit');
+
+    if (Number(getInputNum.value) == maxImage) {
+      sideRight = true;
     };
     
-    setImage(currentImage);*/
-    setImage(Math.trunc(Number(getInputNun.value)));
-    getInputNun.value = '';
+    if (Number(getInputNum.value) == minImage) {
+      sideLeft == true ? sideLeft = false : null;
+    };
+    
+    currentImage = Number(getInputNum.value);
+
+    setImage(currentImage);
+    //setImage(Math.trunc(Number(getInputNum.value)));
+    getInputNum.value = '';
   } else {
     //rerollImage('R');
-    getInputNun.value = '';
+    getInputNum.value = '';
   };
 };
 
@@ -288,29 +293,9 @@ fetch('').then(res => res.text()).then(data => {
   timeRaw.forEach(timePice => {
     if (timePice[0] != 0) {
       outputTimeFormat += ' ' + timePice[0] + ' ' + timePice[1];
-    }
-    //console.log(outputTimeFormat.trim())
+    };
   });
   return outputTimeFormat.trim();
 };
 
-console.log(durationCountFormat(3));*/
-
-/*var a = Array(9e8);
-var x = a.length
-
-console.time('testing_forward');
-for (var i = 0; i < x; i++);
-console.timeEnd('testing_forward');
-
-console.time('testing_backwards');
-for (var i = a.length - 1; i >= 0; i--);
-console.timeEnd('testing_backwards');
-
-console.time('testing_while');
-var j = x
-while (j >= 0) {
-  j--
-};
-console.timeEnd('testing_while');*/
-
+console.log(durationCountFormat(301));*/

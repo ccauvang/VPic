@@ -296,3 +296,16 @@
 body {
   background-image: linear-gradient(125deg, #040F03 30%, #142B14 60%, #3F6038);
 }
+
+
+#text-test {
+  background: linear-gradient(45deg, #97E0B1 20%, #389389 50%, #104B7A 75%, #7F70C0 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 3px;
+  font-size: 45px;
+  text-align: center;
+  font-weight: 1000;
+  font-family: mono;
+  filter: hue-rotate(0deg);
+}

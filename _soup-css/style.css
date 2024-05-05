@@ -31,7 +31,7 @@ html, body {
   /*filter: blur(3em);*/
 }
 
-.lines {
+.internetStatus {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   -moz-user-select: none;
@@ -59,6 +59,19 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
+}
+
+.currentImage {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  font-size: 17px;
+  font-weight: 500;
+  color: #318267;
+  font-family: Roboto, 'Open Sans', sans-serif;
 }
 
 .blog-btnR {
