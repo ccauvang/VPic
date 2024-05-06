@@ -194,17 +194,14 @@ let subm = () => {
       sideRight = true;
     };
     
-    if (Number(getInputNum.value) == minImage) {
-      sideLeft == true ? sideLeft = false : null;
+    if (Number(getInputNum.value) == minImage || sideLeft == true) {
+      sideLeft = false;
     };
     
     currentImage = Number(getInputNum.value);
 
     setImage(currentImage);
     //setImage(Math.trunc(Number(getInputNum.value)));
-    getInputNum.value = '';
-  } else {
-    //rerollImage('R');
     getInputNum.value = '';
   };
 };
