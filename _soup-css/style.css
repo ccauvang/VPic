@@ -68,10 +68,14 @@ html, body {
   -ms-user-select: none;
   user-select: none;
   
+  position: absolute;
+  width: 8vw;
+  height: 3vh;
   font-size: 17px;
   font-weight: 500;
   color: #318267;
   font-family: Roboto, 'Open Sans', sans-serif;
+  z-index: 3;
 }
 
 .blog-btnR {

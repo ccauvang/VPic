@@ -129,7 +129,7 @@ imageQueue = JSON.parse(localStorage.getItem('imageStorage'));
 //console.timeEnd('l');
 
 function setImage(value) {
-  currentImgDiv[0].innerHTML = currentImage;
+  currentImgDiv[0].innerHTML = value;
 
   container.style.backgroundImage = `url(_image/pic${imageQueue == null ? 0 : imageQueue[value]}.png)`;
   //document.querySelector('title').textContent = `${imageQueue[value]}`;
@@ -227,6 +227,7 @@ let dangerouExit = (n) => {
   if (container.style.backgroundImage.slice(5, -2) != 'river.png') {
     console.log(container.style.backgroundImage.slice(12, -2));
     container.style.backgroundImage = `url(river.png)`;
+    currentImgDiv[0].innerHTML = 'defaul';
     //container.style.filter = 'brightness(0)'
     console.log(n);
   };
