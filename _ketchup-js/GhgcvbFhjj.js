@@ -84,7 +84,8 @@ async function fet() {
         document.getElementById('light').style.fill = 'red';
         status = false
       }
-    }
+    };
+    
     updateState();
     setInterval(() => {
       updateState();

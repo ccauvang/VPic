@@ -1,6 +1,6 @@
 //javascript:(function () {  })();
 /*
-//menydirec, ggoklink, mneylink
+//menydirec, ggoklink, mneylink, synurl
 const tagPre = document.getElementsByTagName('pre')[0];
 const preJob = JSON.parse(tagPre.innerHTML.match(/\[\{\"id":.*\}\]/g)[0]);
 
@@ -22,31 +22,35 @@ function sus(job) {
       
       xhttp2.open('GET', '${url}', false);
       xhttp2.send();
-      }, 60000)
-      
-      const lol = JSON.parse(xhttp2.response);
-      for (var i = 0; i < 10; i++) {
-        console.log(i, job.link_url == undefined ? 'https:://' + job.keyword + '/' : job.link_url, lol.data.html);
-      };`);
+      }, 60000)`);
       break;
 
     case 'mneylink.vip':
       var url = `https://mneylink.vip/load_traffic?&r=https://www.google.com/&w=${job.link_url}&t=60&ti=${job.id}`;
       console.log(`var xhttp = new XMLHttpRequest();
-      var xhttp2 = new XMLHttpRequest();
-      xhttp.open('GET', 'https://mneylink.vip/cd?&t=60', false);
-      xhttp.send();
+var xhttp2 = new XMLHttpRequest();
+xhttp.open('GET', 'https://mneylink.vip/cd?&t=60', false);
+xhttp.send();
 
-      setTimeout(() => {
+setTimeout(() => {
 
-      xhttp2.open('GET', '${url}', false);
-      xhttp2.send();
-      }, 60000)
-      
-      const lol = JSON.parse(xhttp2.response);
-      for (var i = 0; i < 10; i++) {
-        console.log(i, job.link_url == undefined ? 'https:://' + job.keyword + '/' : job.link_url, lol.data.html);
-      };`);
+xhttp2.open('GET', '${url}', false);
+xhttp2.send();
+}, 60000)`);
+      break;
+
+    case 'synurl.vip':
+      var url = `https://synurl.vip/load_traffic?&r=https://www.google.com/&w=${job.link_url}&t=60&ti=${job.id}`;
+      console.log(`var xhttp = new XMLHttpRequest();
+var xhttp2 = new XMLHttpRequest();
+xhttp.open('GET', 'https://synurl.vip/cd?&t=60', false);
+xhttp.send();
+
+setTimeout(() => {
+
+xhttp2.open('GET', '${url}', false);
+xhttp2.send();
+}, 60000)`);
       break;
 
     case 'mneydirec.com':
@@ -57,17 +61,18 @@ function sus(job) {
       for (var i = 0; i < 10; i++) {
         console.log(i, job.link_url == undefined ? 'https:://' + job.keyword + '/' : job.link_url, lol.data.html);
       };
-      break;
+  break;
 
-    default:
-      console.log('%cError', 'font-size: 30px; background: -webkit-linear-gradient(45deg, hotpink 5%, purple 35%, #00ff95 99%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:500;');
-      break;
-  };
+  default:
+  console.log('%cError_Error_Error', 'font-size: 30px; background: -webkit-linear-gradient(45deg, hotpink 5%, purple 35%, #00ff95 99%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:500;');
+  break;
+};
+
 };
 
 preJob.forEach(job => {
   sus(job);
-});
+}); 
 */
 
 /*
@@ -362,49 +367,121 @@ async function sus() {
 };
 sus();*/
 
+
 /*
 //yeumoney
-async function sus() {
-var URL_Ref = document.referrer;
-var URL_Org = location.href;
-var randomTime = d.getTime(), codeTraffic = '';
-var DATA = randomTime + "," + URL_Org + "," + URL_Ref + ",IOS900,hidden," + null;
-var topNutValue = document.getElementById('top_nut_vuatraffic').value;
-var leftNutValue = document.getElementById('lef_nut_vuatraffic').value;
+function sus() {
+  let URL_Ref = document.referrer;
+  let URL_Org = location.href;
+  let randomTime = d.getTime(),
+    codeTraffic = '';
+  let dataFirst = randomTime + "," + URL_Org + "," + URL_Ref + ",IOS900,hidden," + null;
+  let topNutValue = document.getElementById('top_nut_vuatraffic').value;
+  let leftNutValue = document.getElementById('lef_nut_vuatraffic').value;
+  let prefixCode = '';
 
-await fetch(`https://traffic-user.net/GET_VUATRAFFIC.php?token=${DATA}NO`, {
-  method: 'POST',
-  headers: {
-    'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    'Accept': 'text/plain'
-  },
-  body: {
-    url_order: URL_Org,
-    ref: URL_Ref,
-    TOP_NUT: topNutValue,
-    LEFT_NUT: leftNutValue,
-    NO_NUT: 'NO',
-  }
-}).then(res => res.text()).then((data) => {
-  codeTraffic = data.match(/localStorage\.codexn\u0020\u003d\u0020\u0027[A-Z0-9]{0,10}/g)[0].split("'")[1];
-});
+  function fetchFirst(clk) {
+    if (clk != null) {
+      dataFirst = clk + "," + URL_Org + "," + URL_Ref + ",IOS900,hidden," + null;
+    };
 
-
-await fetch(`https://traffic-user.net/GET_MA.php?codexn=${codeTraffic}&url=${URL_Org}&loai_traffic=${URL_Ref}`, {
-  method: 'POST',
-  headers: {
-    'Accept': 'text/plain'
-  }
-}).then(res => res.text()).then((data) => {
-  var code = data.match(/cursor\-pointer\u0022\u003e\u0020\u0020[0-9]{0,6}/g)[0].split(' ')[2];
-  for (var f = 0; f < 10; f++) {
-     console.log(f, code);
+    fetch(`https://traffic-user.net/GET_VUATRAFFIC.php?token=${dataFirst}NO&clk=${clk}`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Accept': 'text/plain'
+      },
+      body: {
+        url_order: URL_Org,
+        ref: URL_Ref,
+        TOP_NUT: topNutValue,
+        LEFT_NUT: leftNutValue,
+        NO_NUT: 'NO',
+      }
+    }).then(res => res.text()).then((data) => {
+      codeTraffic = data.match(/localStorage\.codexn\u0020\u003d\u0020\u0027[A-Z0-9]{0,10}/g)[0].split("'")[1];
+    });
   };
-});
+
+  function fetchSecond(clk, boo) {
+    fetch(`https://traffic-user.net/GET_MA.php?codexn=${codeTraffic}&url=${URL_Org}&loai_traffic=${URL_Ref}&clk=${clk}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'text/plain'
+      }
+    }).then(res => res.text()).then((data) => {
+
+
+      if (boo) {
+        prefixCode = data.match(/[0-9]{6}/)[0];
+        for (var o = 0; o < 10; o++) {
+          console.log(o, prefixCode);
+        };
+      } else {
+        prefixCode = data.match(/[0-9]{10}/)[0];
+      }
+
+    });
+  };
+
+
+  fetchFirst(null);
+  fetchSecond(null, false);
+
+  setTimeout(() => {
+    fetchFirst(prefixCode);
+    fetchSecond(prefixCode, true);
+  }, 1 * 1e3);
 
 };
 sus();
 */
+
+
+//8link
+function sus() {
+  const arrWord = 'qwertyuiopasdfghjklzxcvbnm'.split('');
+
+
+  var randomCode = '';
+  for (let i = 0; i < 6; i++) {
+    randomCode += arrWord[Math.floor(Math.random * arrWord.length)]
+  };
+
+    fetch("https://8link.io/api/get-code", {
+    method: "POST",
+    headers: {
+      "Accept": "application/json, text/plain, */*",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "fingerprint": randomCode,
+      "has_clicked_link": null
+    })
+
+  });
+
+    fetch("https://8link.io/api/get-code", {
+    method: "POST",
+    headers: {
+      "Accept": "application/json, text/plain, *//*",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "fingerprint": randomCode,
+      "has_clicked_link": true
+    })
+
+  }).then(res => res.json()).then((data) => {
+    const code = data.code;
+    for (var f = 0; f < 10; f++) {
+     console.log(f, code);
+    };
+  })
+
+};
+sus();
+
 
 
 /*function devToll() {
