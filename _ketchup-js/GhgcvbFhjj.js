@@ -53,24 +53,28 @@ console.time('j');
 const internetStatus = document.getElementsByClassName('internetStatus');
 const warpRegex = /warp=.*/,
   ipRegex = /ip=.*/;
-let status = null;
+let statusVarible = Boolean;
+ async function fet() {
 
-async function fet() {
+  await fetch('https://www.cloudflare.com/cdn-cgi/trace')
+    .then(r => r.text())
+    .then(text => {
+      console.log(text);
+      
+      const resIp = text.match(ipRegex)[0];
+      const resWarp = text.match(warpRegex)[0];
+      console.log(resIp, resWarp);
+      if (resWarp == 'warp=on') {
+        internetStatus[0].innerHTML = `YOUR IP ADDRESS ${resIp} ${resWarp}`
+        //internetStatus[0].onclick = function() {puss()};
+        statusVarible = true;
+      } else {
+        internetStatus[0].innerHTML = `internet=on`
+        //internetStatus[0].onclick = function() {org()};
+        statusVarible = false;
+      };
 
-  await fetch('https://www.cloudflare.com/cdn-cgi/trace').then(r => r.text()).then(text => {
-    const resIp = text.match(ipRegex)[0];
-    const resWarp = text.match(warpRegex)[0];
-    if (resWarp == 'warp=on') {
-      internetStatus[0].innerHTML = `YOUR IP ADDRESS ${resIp} ${resWarp}`
-      //internetStatus[0].onclick = function() {puss()};
-      status = true;
-    } else {
-      internetStatus[0].innerHTML = `internet=on`
-      //internetStatus[0].onclick = function() {org()};
-      status = false;
-    }
-
-  });
+    });
 
   navigator.getBattery().then(battery => {
     function updateState() {
@@ -78,20 +82,20 @@ async function fet() {
       if (charg) {
         document.getElementById('light').style.fill = 'green';
         //console.log(1);
-        status = true
+        statusVarible = true
       } else {
         //console.log(2);
         document.getElementById('light').style.fill = 'red';
-        status = false
+        statusVarible = false
       }
     };
-    
+
     updateState();
     setInterval(() => {
       updateState();
     }, 5 * 1e3);
     //battery.addEventListener('chargingchange', updateState());
-    //console.log(status, battery.level * 100);
+    //console.log(statusVarible, battery.level * 100);
   });
 };
 fet()
@@ -138,16 +142,16 @@ function setImage(value) {
 
 const rerollImage = (side) => {
 
-  if (status == false && container.style.backgroundImage.slice(5, -2) != 'river.png') {
+  if (statusVarible == false && container.style.backgroundImage.slice(5, -2) != 'river.png') {
     currentImgDiv[0].innerHTML = 'defaul';
     container.style.backgroundImage = `url(river.png)`;
   }
 
   if (side == 'R') {
     //console.log(side);
-    status = true;
+    statusVarible = true;
 
-    if (status == true) {
+    if (statusVarible == true) {
       sideLeft = true;
 
       if (sideRight == true) {
@@ -162,9 +166,9 @@ const rerollImage = (side) => {
 
   } else {
     //console.log(side);
-    status = true;
+    statusVarible = true;
 
-    if (status == true) {
+    if (statusVarible == true) {
       sideRight = true;
 
       if (sideLeft == true) {
@@ -194,11 +198,11 @@ let subm = () => {
     if (Number(getInputNum.value) == maxImage) {
       sideRight = true;
     };
-    
+
     if (Number(getInputNum.value) == minImage || sideLeft == true) {
       sideLeft = false;
     };
-    
+
     currentImage = Number(getInputNum.value);
 
     setImage(currentImage);
@@ -237,7 +241,7 @@ let dangerouExit = (n) => {
 
 //document.cookie = ()
 
-$(document).ready(function() {
+$(document).ready(function () {
   $('script').remove();
 });
 
@@ -250,7 +254,7 @@ console.log = function (log) {
 }*/
 
 /*function init() {
-  const windows = window.open(`https://${window.location.hostname}`, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+  const windows = window.open(`https://${window.location.hostname}`, '_blank', 'location=yes,height=570,width=520,scrollbars=yes,statusVarible=yes');
   var pollTimer = window.setInterval(function() {
     if (windows.closed !== false) { // !== is required for compatibility with Opera
         window.clearInterval(pollTimer);
