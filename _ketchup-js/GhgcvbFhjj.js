@@ -59,11 +59,8 @@ let statusVarible = Boolean;
   await fetch('https://www.cloudflare.com/cdn-cgi/trace')
     .then(r => r.text())
     .then(text => {
-      console.log(text);
-      
       const resIp = text.match(ipRegex)[0];
       const resWarp = text.match(warpRegex)[0];
-      console.log(resIp, resWarp);
       if (resWarp == 'warp=on') {
         internetStatus[0].innerHTML = `YOUR IP ADDRESS ${resIp} ${resWarp}`
         //internetStatus[0].onclick = function() {puss()};
