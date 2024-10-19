@@ -265,7 +265,7 @@ html, body {
   background: linear-gradient(45deg, hotpink 15%, purple 35%, #00ff95 90%);
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 800px), (max-width: 800px) {
   
   #chargLight {
     right: 306px;
@@ -276,6 +276,23 @@ html, body {
     width: 100vw;
   }
 }
+
+@media only screen and (max-width: 450px) {
+  .internetStatus {
+    width: 90px;
+  }
+}
+
+@media only screen and (max-width: 260px) {
+  .intp {
+    display: none;
+  }
+
+  .internetStatus {
+    display: none;
+  }
+}
+
 
 @media only screen and (max-width: 500px) {
   
