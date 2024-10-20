@@ -568,49 +568,75 @@ sus();
 */
 
 
-// //8link
-// function sus() {
-//   const arrWord = 'qwertyuiopasdfghjklzxcvbnm'.split('');
+/*
+//8link
+function sus() {
+  const arrWord = 'qwertyuiopasdfghjklzxcvbnm'.split('');
 
 
-//   var randomCode = '';
-//   for (let i = 0; i < 6; i++) {
-//     randomCode += arrWord[Math.floor(Math.random * arrWord.length)]
-//   };
+  var randomCode = '';
+  for (let i = 0; i < 6; i++) {
+    randomCode += arrWord[Math.floor(Math.random * arrWord.length)]
+  };
 
-//     fetch("https://8link.io/api/get-code", {
-//     method: "POST",
-//     headers: {
-//       "Accept": "application/json, text/plain, */*",
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       "fingerprint": randomCode,
-//       "has_clicked_link": null
-//     })
+    fetch("https://8link.io/api/get-code", {
+    method: "POST",
+    headers: {
+      "Accept": "application/json, text/plain, *//*",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "fingerprint": randomCode,
+      "has_clicked_link": null
+    })
 
-//   });
+  });
 
-//     fetch("https://8link.io/api/get-code", {
-//     method: "POST",
-//     headers: {
-//       "Accept": "application/json, text/plain, *//*",
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       "fingerprint": randomCode,
-//       "has_clicked_link": true
-//     })
+    fetch("https://8link.io/api/get-code", {
+    method: "POST",
+    headers: {
+      "Accept": "application/json, text/plain, *//*",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "fingerprint": randomCode,
+      "has_clicked_link": true
+    })
 
-//   }).then(res => res.json()).then((data) => {
-//     const code = data.code;
-//     for (var f = 0; f < 10; f++) {
-//      console.log(f, code);
-//     };
-//   })
+  }).then(res => res.json()).then((data) => {
+    const code = data.code;
+    for (var f = 0; f < 10; f++) {
+     console.log(f, code);
+    };
+  })
 
-// };
-// sus();
+};
+sus(); 
+*/
+
+/*
+//synurl
+function sus(){
+  var xhttp = new XMLHttpRequest();
+  let times = 60;
+  var urlGet = `https://synurl.vip/cd?&t=${times}`;
+  xhttp.open("GET", urlGet, false);
+  xhttp.send();
+  console.log(JSON.parse(xhttp.response), 'get');
+setTimeout(() => {
+  var xhttp2 = new XMLHttpRequest();
+  var urlLoad = `https://synurl.vip/load_traffic?&r=&w=${window.location.href}&t=${times}&ti=0`
+  xhttp2.open("GET", urlLoad, false);
+  xhttp2.send();
+  const resData = JSON.parse(xhttp2.response);
+
+  for (let i = 0; i < 10; i++) {
+      console.log(resData.data.html, window.location.href,i);
+  };
+}, times*1e3);
+}
+sus(); 
+*/
 
 
 

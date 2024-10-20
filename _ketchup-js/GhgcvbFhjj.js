@@ -102,7 +102,8 @@ const maxImage = 15;
 const minImage = 0;
 let sideLeft, sideRight;
 const container = document.getElementById('container');
-const currentImgDiv = document.getElementsByClassName('currentImage')
+const currentImgDiv = document.getElementsByClassName('currentImage');
+const preLoadImg = document.getElementsByClassName('preload')[0];
 //console.time('l');
 
 let imageQueue = [];
@@ -132,7 +133,7 @@ imageQueue = JSON.parse(localStorage.getItem('imageStorage'));
 
 function setImage(value) {
   currentImgDiv[0].innerHTML = value;
-
+  //preLoadImg.style.backgroundImage = `url(_image/pic${imageQueue == null ? 0 : imageQueue[value = maxImage ? 0 : value + 1]}.png)`
   container.style.backgroundImage = `url(_image/pic${imageQueue == null ? 0 : imageQueue[value]}.png)`;
   //document.querySelector('title').textContent = `${imageQueue[value]}`;
 };

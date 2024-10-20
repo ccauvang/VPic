@@ -300,7 +300,7 @@ body {
 
 #text-test {
   background: linear-gradient(45deg, #97E0B1 20%, #389389 50%, #104B7A 75%, #7F70C0 90%);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 3px;
   font-size: 45px;

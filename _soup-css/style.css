@@ -54,11 +54,16 @@ html, body {
   /*pointer-events: none;*/
   
   /*display: --webkit-box;*/
-  -webkit-line-clamp: 1;
+  line-clamp: 1;
   /*-webkit-box-orient: vertical;*/
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
+}
+
+.preload {
+  /* display: none; */
+  background-image: url('../_image/pic0.png');
 }
 
 .currentImage {
@@ -84,7 +89,7 @@ html, body {
   font-weight: 600;
   font-family: 'Arial Narrow Bold', sans-serif;
   background: -webkit-linear-gradient(45deg, black 5%, #00ff95 100%);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -179,10 +184,10 @@ html, body {
   right: 0;
   width: 50%;
   height: 100%;
-  background: linear-gradient(45deg, #28B619, #1F7116, #28B619);
+  background: linear-gradient(45deg, #2ec31d, #216319, #2ec31d);
   /*background: linear-gradient(45deg, #FF512F 0%, #F09819  51%, #FF512F  100%);*/
   background-size: 180%;
-  color: #D6FFD2;
+  color: #beffb8;
   border: none;
   border-radius: 20px;
   font-family: Roboto, 'Open Sans', sans-serif;
@@ -198,7 +203,8 @@ html, body {
 .btn-sub:active {
   /*padding: 7px , 10px;*/
   background-position: 100%, 0;
-  color: #254222;
+  color: #bdf832;
+  text-shadow: 0px 0px 10px #4aff7a;
   transform: none;
 }
 
@@ -301,5 +307,4 @@ html, body {
     height: 100dvh;
   }
 }
-
 /*create switch dark mode*/
