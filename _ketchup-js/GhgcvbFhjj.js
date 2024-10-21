@@ -103,7 +103,7 @@ const minImage = 0;
 let sideLeft, sideRight;
 const container = document.getElementById('container');
 const currentImgDiv = document.getElementsByClassName('currentImage');
-const preLoadImg = document.getElementsByClassName('preload')[0];
+//const preLoadImg = document.getElementsByClassName('preload')[0];
 //console.time('l');
 
 let imageQueue = [];
