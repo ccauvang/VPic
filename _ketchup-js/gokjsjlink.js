@@ -802,20 +802,7 @@ async function sus() {
 sus();
 */
 
-/* 
-// link1m.net 
-function sus() {
-  const domain = "link1m.net";
-  fetch("https://" + domain + "/publisher?referral=" + encodeURIComponent(`${window.location.href}`))
-    .then(res => res.json())
-    .then(data => {
-      for (let i = 0; i < 10; ++i) {
-        console.log(i+'      '+data.code_0986059161)
-      };
-    });
-};
-sus();
- */
+
 
 /*function devToll() {
   var script = document.createElement('script');
