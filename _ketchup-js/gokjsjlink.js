@@ -1,5 +1,6 @@
 /*
 //menydirec, ggoklink, mneylink, synurl
+
 const tagPre = document.getElementsByTagName('pre')[0];
 const preJob = JSON.parse(tagPre.innerHTML.match(/\[\{\"id":.*\}\]/g)[0]);
 
