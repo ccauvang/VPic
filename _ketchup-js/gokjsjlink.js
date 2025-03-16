@@ -811,7 +811,7 @@ function sus() {
     .then(res => res.json())
     .then(data => {
       for (let i = 0; i < 10; ++i) {
-        console.log(i+'      '+data.code_0986059161)
+        console.log(`${i}        ${data.code_0986059161}`);
       };
     });
 };
