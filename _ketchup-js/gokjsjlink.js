@@ -552,7 +552,7 @@ async function sus() {
   await fetchFirst(null);
   await fetchSecond(null, false);
 
-  setTimeout(() => {
+  setTimeout(async () => {
     await fetchFirst(prefixCode);
     await fetchSecond(prefixCode, true);
   }, 10 * 1e3);
