@@ -714,6 +714,7 @@ function sus() {
   lol(randomcode);
 
   var width, height, f, l, g, b = "";
+  
   screen.width && (b += (width = screen.width ? screen.width : "") + " x " + (height = screen.height ? screen.height : ""));
   var u = navigator.appVersion,
     p = navigator.userAgent,
