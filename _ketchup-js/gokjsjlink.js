@@ -699,7 +699,7 @@ function sus() {
 sus();
 */
 
-/*
+
 //funlink.io
 function sus() {
   var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
@@ -730,9 +730,10 @@ function sus() {
     var huh = O[S];
     if (huh.r.test(p)) {
       W = huh.s;
-      break
-    }
-  }
+      break;
+    };
+  };
+
   var y = "-";
   switch (/Windows/.test(W) && (y = /Windows (.*)/.exec(W)[1], W = "Windows"), W) {
     case "Mac OS X":
@@ -763,7 +764,7 @@ function sus() {
   })}, 60 * 1e3);
 };
 sus();
-*/
+
 
 
 /*
