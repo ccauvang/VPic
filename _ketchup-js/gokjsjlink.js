@@ -756,6 +756,7 @@ function sus() {
     });
     return e.json();
   };
+  
   setTimeout(() => {
   vkl(clientInformations, randomcode).then(n => {
     for (var nAn = 0; nAn < 10; nAn++) {
