@@ -1,3 +1,33 @@
+
+
+/*
+// synurl
+async function sus() {
+  var dataRaw = '';
+  await fetch('https://synurl.vip/synurl-script', {
+    method: 'GET',
+  }).then(res => res.text()).then(data => {
+    dataRaw = data;
+  });
+
+  const dataMatch = JSON.parse(dataRaw.match(/\[\{\"id":.*\}\]/g)[0])[0];
+
+  var url = `https://synurl.vip/load_traffic?&r=https://www.google.com/&w=${dataMatch.link_url}&t=60&ti=${dataMatch.id}`;
+
+  var xhttp = new XMLHttpRequest();
+  var xhttp2 = new XMLHttpRequest();
+  xhttp.open('GET', 'https://synurl.vip/cd?&t=60', false);
+  xhttp.send();
+
+  setTimeout(() => {
+    xhttp.open('GET', url, false);
+    xhttp.send();
+  }, 60000);
+};
+
+sus();
+*/
+
 /*
 //menydirec, ggoklink, mneylink, synurl
 
@@ -22,7 +52,7 @@ function sus(job) {
         xhttp2.open('GET', '${url}', false);
         xhttp2.send();
       }, 60000)`);
-    break;
+      break;
 
     case 'mneylink.vip':
       var url = `https://mneylink.vip/load_traffic?&r=https://www.google.com/&w=${job.link_url}&t=60&ti=${job.id}`;
@@ -46,7 +76,7 @@ function sus(job) {
         xhttp2.open('GET', '${url}', false);
         xhttp2.send();
       }, 60000)`);
-    break;
+      break;
 
     case 'mneydirec.com':
       var url = `https://mneydirec.com/load_traffic?&id=${job.id}&tt=61`;
@@ -56,11 +86,11 @@ function sus(job) {
       for (var i = 0; i < 10; i++) {
         console.log(i, job.link_url == undefined ? 'https:://' + job.keyword + '/' : job.link_url, lol.data.html);
       };
-    break;
+      break;
 
     default:
       console.log('%cError_Error_Error', 'font-size: 30px; background: -webkit-linear-gradient(45deg, hotpink 5%, purple 35%, #00ff95 99%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:500;');
-    break;
+      break;
   };
 
 };
@@ -704,17 +734,17 @@ sus();
 function sus() {
   var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
   async function lol(code) {
-   var o = await fetch("https://public.funlink.io/api/code/ch", {
-     method: "OPTIONS",
-     cache: "no-cache",
-     headers: { rid: code }
-   });
+    var o = await fetch("https://public.funlink.io/api/code/ch", {
+      method: "OPTIONS",
+      cache: "no-cache",
+      headers: { rid: code }
+    });
     return o;
   };
   lol(randomcode);
 
   var width, height, f, l, g, b = "";
-  
+
   screen.width && (b += (width = screen.width ? screen.width : "") + " x " + (height = screen.height ? screen.height : ""));
   var u = navigator.appVersion,
     p = navigator.userAgent,
@@ -756,13 +786,14 @@ function sus() {
     });
     return e.json();
   };
-  
+
   setTimeout(() => {
-  vkl(clientInformations, randomcode).then(n => {
-    for (var nAn = 0; nAn < 10; nAn++) {
-      console.log(nAn, location.hostname, n.code);
-    };
-  })}, 60 * 1e3);
+    vkl(clientInformations, randomcode).then(n => {
+      for (var nAn = 0; nAn < 10; nAn++) {
+        console.log(nAn, location.hostname, n.code);
+      };
+    })
+  }, 60 * 1e3);
 };
 sus();
 
@@ -806,7 +837,7 @@ sus();
 */
 
 /*
-// link1m.net 
+// link1m.net
 function sus() {
   const domain = "link1m.net";
   fetch("https://" + domain + "/publisher?referral=" + encodeURIComponent(`${window.location.href}`))
