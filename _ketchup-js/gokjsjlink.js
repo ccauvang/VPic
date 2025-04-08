@@ -29,7 +29,7 @@ sus();
 */
 
 /*
-// synurl
+// ggoklink
 async function sus() {
   var dataRaw = '';
   await fetch('https://ggoklink.com/synurl-script', {
