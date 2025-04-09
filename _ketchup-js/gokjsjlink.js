@@ -57,6 +57,34 @@ sus();
 */
 
 /*
+// mneylink
+async function sus() {
+  var dataRaw = '';
+  await fetch('https://mneylink.com/synurl-script', {
+    method: 'GET',
+  }).then(res => res.text()).then(data => {
+    dataRaw = data;
+  });
+
+  const dataMatch = JSON.parse(dataRaw.match(/\[\{\"id":.*\}\]/g)[0])[0];
+
+  var url = `https://mneylink.com/load_traffic?&r=https://www.google.com/&w=${dataMatch.link_url}&t=60&ti=${dataMatch.id}`;
+
+  var xhttp = new XMLHttpRequest();
+  var xhttp2 = new XMLHttpRequest();
+  xhttp.open('GET', 'https://mneylink.com/cd?&t=60', false);
+  xhttp.send();
+
+  setTimeout(() => {
+    xhttp.open('GET', url, false);
+    xhttp.send();
+  }, 60000);
+};
+
+sus();
+*/
+
+/*
 //menydirec, ggoklink, mneylink, synurl
 
 const tagPre = document.getElementsByTagName('pre')[0];
