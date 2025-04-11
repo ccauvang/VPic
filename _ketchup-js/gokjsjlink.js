@@ -662,7 +662,6 @@ async function sus() {
     });
   };
 
-
   await fetchFirst(null);
   await fetchSecond(null, false);
 
