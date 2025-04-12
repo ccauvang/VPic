@@ -669,7 +669,6 @@ async function sus() {
     await fetchFirst(prefixCode);
     await fetchSecond(prefixCode, true);
   }, 10 * 1e3);
-
 };
 sus();
 */
