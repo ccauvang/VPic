@@ -688,7 +688,7 @@ function sus() {
     method: "POST",
     headers: {
       "Accept": "application/json, text/plain, *//*",
-"Content-Type": "application/json"
+      "Content-Type": "application/json"
 },
 body: JSON.stringify({
 "fingerprint": randomCode,
