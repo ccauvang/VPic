@@ -743,9 +743,6 @@ setTimeout(() => {
 sus();
 */
 
-
-
-
 /*
 //geturl
 function sus() {
