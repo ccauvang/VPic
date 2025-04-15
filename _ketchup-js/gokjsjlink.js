@@ -1,5 +1,3 @@
-
-
 /*
 // synurl
 async function sus() {
@@ -176,7 +174,6 @@ function sus(job) {
       console.log('%cError_Error_Error', 'font-size: 30px; background: -webkit-linear-gradient(45deg, hotpink 5%, purple 35%, #00ff95 99%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:500;');
       break;
   };
-
 };
 
 preJob.forEach(job => {
