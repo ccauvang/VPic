@@ -193,8 +193,9 @@ function mdirec() {
   for (var i = 0; i < 10; i++) console.log(i, lol.data.html);
   document.getElementById('code').value = lol.data.html
   return 'Hello'
-}
-//mdirec();
+};
+
+mdirec();
 */
 
 //traffic123
