@@ -52,7 +52,6 @@ async function sus(input = 'hi') {
 
 
 process.stdin.setDefaultEncoding('utf8');
-
 console.log('Enter promt: ');
 
 process.stdin.on('data', async (listen) => {
