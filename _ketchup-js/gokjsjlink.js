@@ -686,7 +686,7 @@ function sus() {
     method: "POST",
     headers: {
       "Accept": "application/json, text/plain, *//*",
-      "Content-Type": "application/json"
+"Content-Type": "application/json"
 },
 body: JSON.stringify({
 "fingerprint": randomCode,
@@ -927,18 +927,25 @@ function sus() {
 sus();
 */
 
-/*
+/* 
 function devToll() {
   var script = document.createElement('script');
   script.src = "https://cdn.jsdelivr.net/npm/eruda";
   document.body.append(script);
-  script.onload = function() { eruda.init(); }
+  script.onload = function () { eruda.init(); }
 };
 
 devToll();
+ */
 
 let infoSus = ([1e7] + -4e3 + -8e3).replace(/[1408]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 100000).toString(16)))
 
-fetch(`http://localhost:9090/gen-code?id=${Math.floor(Math.random() * 9000)}`, {method: 'GET', headers: {'Content-Type': 'application/json', trash: infoSus}/*, body: encodeURI('https://duma.wibu.lol')/});*/
+fetch(`http://localhost:9090/gen-code?id=${Math.floor(Math.random() * 9000)}`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    trash: infoSus
+  },
+  body: encodeURI('https://duma.wibu.lol') });
 
 //console.log(([1e7] + -1e3 + -4e3 + -8e3 + -1e11 + -3e3 + -6e7 + -5e4 + -9e2).replace(/[0-9]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 100000).toString(16))))let infoSus = ([1e7] + -4e3 + -8e3).replace(/[1408]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 100000).toString(16)))
