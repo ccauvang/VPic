@@ -49,8 +49,6 @@ async function sus(input = 'hi') {
     // process.exit();
 };
 
-
-
 process.stdin.setDefaultEncoding('utf8');
 console.log('Enter promt: ');
 
