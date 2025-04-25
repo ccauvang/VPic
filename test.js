@@ -50,7 +50,7 @@ async function sus(input = 'hi') {
 };
 
 process.stdin.setDefaultEncoding('utf8');
-console.log('Enter promt: ');
+console.log('Enter prompt: ');
 
 process.stdin.on('data', async (listen) => {
     await sus(`${listen}`);
