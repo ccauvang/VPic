@@ -56,3 +56,4 @@ process.stdin.on('data', async (listen) => {
     await sus(`${listen}`);
     // process.exit();
 });
+
