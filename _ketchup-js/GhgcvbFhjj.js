@@ -138,6 +138,7 @@ const rerollImage = (side) => {
     statusVariable = true;
 
     if (statusVariable == true) {
+      
       sideLeft = true;
 
       if (sideRight == true) {
@@ -179,9 +180,8 @@ getInputNum.addEventListener('input', () => {
 
 let subm = () => {
   if (getInputNum.value != '' && !isNaN(getInputNum.value) && (getInputNum.value <= maxImage) && (getInputNum.value >= 0)) {
-    console.log(currentImage, 'subMit');
 
-    if (Number(getInputNum.value) == maxImage) {
+    if (Number(getInputNum.value) == maxImage || sideRight == false) {
       sideRight = true;
     };
 
@@ -190,6 +190,8 @@ let subm = () => {
     };
 
     currentImage = Number(getInputNum.value);
+
+    console.log(currentImage, 'subMit');
 
     setImage(currentImage);
     //setImage(Math.trunc(Number(getInputNum.value)));
