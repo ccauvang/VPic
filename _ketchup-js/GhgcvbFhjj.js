@@ -252,7 +252,9 @@ console.log = function (log) {
 }
 
 init()*/
-/*setInterval(() => {
+
+/*
+setInterval(() => {
 fetch('').then(res => res.text()).then(data => {
   document.body.innerHTML = data;
 }).catch(err => console.log(err)) }, 5000);*/
