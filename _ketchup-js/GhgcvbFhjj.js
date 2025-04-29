@@ -63,8 +63,8 @@ async function fet() {
 
   navigator.getBattery().then(battery => {
     function updateState() {
-      const charg = battery.charging;
-      if (charg) {
+      const isCharging = battery.charging;
+      if (isCharging) {
         document.getElementById('light').style.fill = 'green';
         //console.log(1);
         statusVariable = true
@@ -95,7 +95,6 @@ const currentImgDiv = document.getElementsByClassName('currentImage');
 //console.time('l');
 
 let imageQueue = [];
-
 
 if (localStorage.getItem('imageStorage') == null) {
   for (var num = maxImage; num >= 0; num--) {
@@ -129,7 +128,7 @@ function setImage(value) {
 const rerollImage = (side) => {
 
   if (statusVariable == false && container.style.backgroundImage.slice(5, -2) != 'river.png') {
-    currentImgDiv[0].innerHTML = 'defaul';
+    currentImgDiv[0].innerHTML = 'default';
     container.style.backgroundImage = `url(river.png)`;
   }
 
@@ -178,7 +177,7 @@ getInputNum.addEventListener('input', () => {
   };
 });
 
-let subm = () => {
+function subMit() {
   if (getInputNum.value != '' && !isNaN(getInputNum.value) && (getInputNum.value <= maxImage) && (getInputNum.value >= 0)) {
 
     if (Number(getInputNum.value) == maxImage || sideRight == false) {
@@ -216,11 +215,11 @@ let subm = () => {
 //
 //console.log(imageQueue);
 
-let dangerouExit = (n) => {
+let dangerousExit = (n) => {
   if (container.style.backgroundImage.slice(5, -2) != 'river.png') {
     console.log(container.style.backgroundImage.slice(12, -2));
     container.style.backgroundImage = `url(river.png)`;
-    currentImgDiv[0].innerHTML = 'defaul';
+    currentImgDiv[0].innerHTML = 'default';
     //container.style.filter = 'brightness(0)'
     console.log(n);
   };
