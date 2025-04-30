@@ -43,9 +43,6 @@ async function sus(input = 'hi') {
         };
     });
     console.log('');
-
-    // uncomment the line below if you don't want it keep responding you.
-    // process.exit();
 };
 
 process.stdin.setDefaultEncoding('utf8');
