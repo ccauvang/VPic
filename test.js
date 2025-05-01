@@ -28,7 +28,6 @@ async function sus(input = 'hi') {
         // const reader = res.body.getReader();
         const decoder = new TextDecoder();
 
-
         for await (chunk of res.body) {
             const dataAfterDecode = decoder.decode(chunk, { stream: true })
             if (dataAfterDecode.slice(7, -1) !== 'DONE') {
