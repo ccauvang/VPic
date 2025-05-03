@@ -48,19 +48,19 @@ let joi = setInterval(() => {
 }, 10)*/
 
 const letterArr = 'QWERTYUIOPASDFGHJKLZXCVBNM1234567890'.split('');
-const lterLength = letterArr.length;
+const letterLength = letterArr.length;
 
 
 
 text.addEventListener('click', function e() {
   let pointer = 0;
 
-  let interviral = setInterval(() => {
-    if (pointer > text.innerText.length) clearInterval(interviral);
+  let interval = setInterval(() => {
+    if (pointer > text.innerText.length) clearInterval(interval);
 
     var hello = text.innerText.split('').map((t, index) => {
       if (index < pointer) return text.dataset.test[index]
-      return letterArr[Math.floor(Math.random() * lterLength)]
+      return letterArr[Math.floor(Math.random() * letterLength)]
 
     }).join('');
 
