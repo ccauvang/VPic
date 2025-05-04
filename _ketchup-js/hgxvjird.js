@@ -17,7 +17,7 @@ let rule = true;
 for (let i = 0; i < 10; i++) {
   let abb = document.getElementById(`${i}`);
   abb.setAttribute('onclick', `subm(${i})`);
-}
+};
 
 let subm = (id) => {
   if (id != idHistory) {
