@@ -156,24 +156,24 @@ function majorNum2(input) {
   const inpLength = input.length;
   const inpLengthDiv = inpLength / 2;
   var count = 0;
-  var relu;
+  var result;
 
   for (var i = inpLength - 1; i > -1; i--) {
     if (!count) {
-      relu = input[i];
-      if (input[i - 1] != relu && input[i - 2] == relu) i -= 2;
+      result = input[i];
+      if (input[i - 1] != result && input[i - 2] == result) i -= 2;
     };
 
-    //if (inpLengthDiv == count) return relu;
+    //if (inpLengthDiv == count) return result;
 
-    if (input[i] == relu) {
+    if (input[i] == result) {
       count++
     } else {
       count--
     }
     //console.log(i)
   }
-  return relu
+  return result
 };
 
 let a = Array(3e7 + 1),
