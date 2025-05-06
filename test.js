@@ -1,14 +1,14 @@
 
-async function sus(input = 'hi') {
+async function sus(input = 'hi',systemInput = 'Hello Bro', content = '') {
     input += 'Respond this in English';
     const dataRaw = {
         "messages": [
             {
-                "content": "user mess",
+                "content": content,
                 "role": "user"
             },
             {
-                "content": "bot mess",
+                "content": systemInput,
                 "role": "system"
             },
             {
@@ -49,8 +49,11 @@ process.stdin.setDefaultEncoding('utf8');
 
 console.log('Enter prompt: ');
 
+var contentMessage = '';
+
 process.stdin.on('data', async (listen) => {
-    await sus(`${listen}`);
+    contentMessage += listen + '\n';
+    await sus(`${listen}`, 'Responding like a REAL Bro thug.', contentMessage);
     // process.exit();
 });
 
