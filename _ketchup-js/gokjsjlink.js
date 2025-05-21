@@ -875,52 +875,172 @@ function sus() {
 sus();
 */
 
-/*
+/* 
 //seotrieuview
-async function sus() {
-  let dataSend = {
-      'is_direct': 1,
-      referrer: window.location.origin,
-      url: window.location.href
+async function sus(type = 2) {
+
+  let getSrc = document.getElementsByTagName('script');
+  let srcLen = getSrc.length;
+  let linkSrc = 'https://seotrieuview.com/js/script/script-direct.js?v=';
+  if (type == 2) {
+    for (let i = 0; i < srcLen; i++) {
+      if ((getSrc[i].src != '') && (getSrc[i].src.match(/\/js\/script\/script\-direct\.js\?v=[0-9]{0,20}/g) != null)) {
+        const sauce = getSrc[i].src;
+        linkSrc += sauce.match(/\/js\/script\/script\-direct\.js\?v=[0-9]{0,20}/g)[0].split('=')[1];
+        break;
+      };
+    };
+  } else {
+    linkSrc = 'https://seotrieuview.com/js/script/script-google-search.js?v='
+    for (let i = 0; i < srcLen; i++) {
+      if ((getSrc[i].src != '') && (getSrc[i].src.match(/\/js\/script\/script\-gooogle\-search\.js\?v=[0-9]{0,20}/g) != null)) {
+        const sauce = getSrc[i].src;
+        linkSrc += sauce.match(/\/js\/script\/script\-gooogle\-search\.js\?v=[0-9]{0,20}/g)[0].split('=')[1];
+        break;
+      };
+    };
   };
 
-  const fetchApi = await fetch('https://seotrieuview.com/api/tracking-page', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(dataSend),
-  })
-  if (!fetchApi.ok) {
-  throw Error('Lỗi khi gọi API!')
-  }
-  const data = await fetchApi.json();
+  function encodeXORBase64(input) {
+    if (typeof input !== 'string') {
+      input = String(input);
+    };
+    const encryptionKey = "seotrieuview_cookie"; // Deobfuscated key
+    let xoredChars = input.split('').map((char, i) =>
+      String.fromCharCode(char.charCodeAt(0) ^ encryptionKey.charCodeAt(i % encryptionKey.length))
+    ).join('');
+    return btoa(xoredChars);
+  };
 
-  dataSend['codex'] = data.codex;
+  function decodeXORBase64(input) {
+    if (typeof input !== 'string') {
+      input = String(input);
+    };
+
+    const key = 'seotrieuview_cookie';
+    const decoded = atob(input).split('').map((char, i) =>
+      String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length))
+    ).join('');
+    return decoded;
+  };
+
+  function getStrydClearanceCookie(trashCode = '', time) {
+    // const currentTimeTrash = new Date().getTime();
+    let dataToEncode = `time=${time};&paramTypeScript=direct;&referrer=${document.location.origin};&scriptSrcDocument=${trashCode}`;
+
+    if (type == 1) {
+      dataToEncode = `time=${time};&paramTypeScript=google-search;&referrer=${document.location.origin};&scriptSrcDocument=${trashCode}&type=google-search`;
+    }
+
+    let encodedValue = encodeXORBase64(dataToEncode);
+    return `${encodeURIComponent(encodedValue)}`;
+  };
+
+  function getSourceCodexdCookie(codex = '', trashInput = '') {
+
+    const trasCodex = decodeXORBase64(decodeURIComponent(trashInput));
+
+    let encodedValue = encodeXORBase64(`${trasCodex};&codex=${codex}`);
+    return `${encodeURIComponent(encodedValue)}`;
+  };
+
+  let dataSend = {
+    referrer: window.location.origin,
+    url: window.location.href
+  };
+
+  const currentTime = new Date().getTime();
+
+  const cookieTrashCL = getStrydClearanceCookie(linkSrc, currentTime);
+
+  const fetchClickEvent1 = await fetch('https://seotrieuview.com/api/tracking-page/click-event', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Web-Cookie': cookieTrashCL,
+      'Web-Time': encodeXORBase64(currentTime),
+      'Web-Traffic': type
+    },
+    body: JSON.stringify(dataSend),
+  });
+
+  const lol1 = await fetchClickEvent1.json();
+  const countdown1 = await lol1.countdown;
   setTimeout(async () => {
-
-    const getPass = await fetch('https://seotrieuview.com/api/tracking-page', {
+    const fetchApi = await fetch('https://seotrieuview.com/api/tracking-page', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Web-Cookie': cookieTrashCL,
+        'Web-Time': encodeXORBase64(currentTime + 60_000),
+        'Web-Traffic': type
+      },
       body: JSON.stringify(dataSend),
     })
-    const dataPass = await getPass.json();
+    if (!fetchApi.ok) {
+      throw Error('Lỗi khi gọi API!');
+    }
+    const data = await fetchApi.json();
+
+    const codex = await data.codex;
+    console.log(codex);
+
+    const currentTime2 = new Date().getTime();
+
+    const fetchClickEvent2 = await fetch('https://seotrieuview.com/api/tracking-page/click-event', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Web-Cookie': getSourceCodexdCookie(codex, cookieTrashCL),
+        'Web-Time': encodeXORBase64(currentTime2),
+        'Web-Device': encodeXORBase64(codex),
+        'Web-Info': encodeXORBase64(codex + '-source=seotrieuview'),
+        'Web-Traffic': type
+      },
+      body: JSON.stringify(dataSend),
+    });
+
+    const lol2 = await fetchClickEvent2.json()
+    const countdown2 = lol2.countdown;
+    dataSend['codex'] = codex;
+    setTimeout(async () => {
+
+      const getPass = await fetch('https://seotrieuview.com/api/tracking-page', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Web-Cookie': getSourceCodexdCookie(codex, cookieTrashCL),
+          'Web-Time': encodeXORBase64(new Date().getTime()),
+          'Web-Device': encodeXORBase64(codex),
+          'Web-Info': encodeXORBase64(codex + '-source=seotrieuview'),
+          'Web-Traffic': type
+        },
+        body: JSON.stringify(dataSend),
+      });
+      const dataPass = await getPass.json();
 
       for (let i = 0; i < 10; ++i) {
         console.log(i, dataPass.password);
       }
-  }, 3000);
+    }, countdown2 * 1e3);
+  }, countdown1 * 1e3 - 50_000 + 3000);
+
+
 };
-sus();
+sus(1);
 */
+
+
 
 /*
 // link1m.net
 function sus() {
   const domain = "link1m.net";
   fetch("https://" + domain + "/publisher?referral=" + encodeURIComponent(`${window.location.href}`))
-    .then(res => res.json())
-    .then(data => {
-      for (let i = 0; i < 10; ++i) {
-        console.log(`${i}        ${data.code_0986059161}`);
+  .then(res => res.json())
+  .then(data => {
+    for (let i = 0; i < 10; ++i) {
+      console.log(`${i}        ${data.code_0986059161}`);
       };
     });
 };
@@ -933,10 +1053,10 @@ function devToll() {
   script.src = "https://cdn.jsdelivr.net/npm/eruda";
   document.body.append(script);
   script.onload = function () { eruda.init(); }
-};
-
-devToll();
- */
+  };
+  
+  devToll();
+  */
 
 let infoSus = ([1e7] + -4e3 + -8e3).replace(/[1408]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 100000).toString(16)))
 
@@ -946,6 +1066,7 @@ fetch(`http://localhost:9090/gen-code?id=${Math.floor(Math.random() * 9000)}`, {
     'Content-Type': 'application/json',
     trash: infoSus
   },
-  body: encodeURI('https://duma.wibu.lol') });
+  body: encodeURI('https://duma.wibu.lol')
+});
 
 //console.log(([1e7] + -1e3 + -4e3 + -8e3 + -1e11 + -3e3 + -6e7 + -5e4 + -9e2).replace(/[0-9]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 100000).toString(16))))let infoSus = ([1e7] + -4e3 + -8e3).replace(/[1408]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 100000).toString(16)))
