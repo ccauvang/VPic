@@ -1025,7 +1025,6 @@ async function sus(type = 2) {
     }, countdown2 * 1e3);
   }, countdown1 * 1e3 - 50_000 + 3000);
 
-
 };
 sus(1);
 */
