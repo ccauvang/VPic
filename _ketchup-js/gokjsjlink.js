@@ -806,6 +806,100 @@ function sus() {
 sus();
 */
 
+
+
+async function sus() {
+  function generateUUID() {
+    var d = new Date().getTime();
+    if (window.performance && typeof window.performance.now === "function") {
+      d += performance.now(); //use high-precision timer if available
+    };
+
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      const r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  };
+
+  function hexToString(stirngHex = '') {
+    const hexs = stirngHex.match(/(\\x[0-9ABCDEF]{0,4})/g);
+
+    var outputStr = '';
+    for (var i = 0; i < hexs.length; ++i) {
+      outputStr += String.fromCharCode(parseInt(hexs[i].split('\\x')[1], 16))
+    };
+    return outputStr;
+  };
+
+  var getSrc = document.getElementsByTagName('script');
+  var srcLen = getSrc.length;
+
+  var trashID = 'https://s1.what-on.com/';
+  var trashIdSrc = '';
+
+  // https://s1.what-on.com/widget/service.js?key=HMRYKQQ
+  for (var i = 0; i < srcLen; ++i) {
+    const matchSource = getSrc[i].src.match(/widget\/(script|service|service\-v2)\.js\?key\=.{0,10}/g);
+    if ((getSrc[i].src != '') && (matchSource != null)) {
+      trashID += matchSource[0].split('=')[0] + '=' + matchSource[0].split('=')[1];
+      trashIdSrc = matchSource[0].split('=')[1];
+      break;
+    };
+  };
+
+  const fetchSrcCode = await fetch(trashID, {
+    method: 'GET'
+  });
+
+  const dataSrc = await fetchSrcCode.text();
+
+
+  const codeID = hexToString(dataSrc.match(/traffic_id\s\=\s\"(\\x[0-9ABCDEF]{0,4})*/g)[0].split('"')[1]);
+    const uuIDName = hexToString(dataSrc.match(/uuid\_name\s\=\s\'(\\x[0-9ABCDEF]{0,4})*/g)[0].split("'")[1]);
+  const sessionID = dataSrc.match(/traffic_session\s\=\s\'.*';/g)[0].split(`'`)[1];
+
+  const dataToSend = {
+    // code: codeID,
+    // session: sessionID,
+    // screen: '1746 x 982',
+    // browser: 'Chrome',
+    // browserVersion: '136.0.0.0',
+    // browserMajorVersion: 136,
+    // mobile: 'false',
+    // os: 'window',
+    // osVersion: 10,
+    // cookies: true,
+    // flashVersion: 'no chcek',
+    // lang: 'en-US',
+    clientID: generateUUID(),
+    pathname: window.location.pathname,
+    href: window.location.href,
+    hostname: window.location.hostname
+  };
+
+  const sessionTrash = '6830b289fc185736b017696a';
+  const IDTrash = localStorage.getItem(uuIDName);
+
+
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.withCredentials = true;
+  xmlHttp.open('GET', `https://s1.what-on.com/widget/get_quest_code.html?code=${codeID}&traffic_session=${sessionTrash}&screen=1746%20x%20982&browser=Chrome&browserVersion=136.0.0.0&browserMajorVersion=136&mobile=false&os=Windows&osVersion=10&cookies=true&flashVersion=no%20check&lang=en-US&client_id=${IDTrash}&pathname=${encodeURIComponent(dataToSend.pathname)}&href=${encodeURIComponent(dataToSend.href)}&hostname=${encodeURIComponent(dataToSend.hostname)}`);
+  xmlHttp.onreadystatechange = () => {
+    const data = JSON.parse(xmlHttp.responseText)
+        function print(data) {
+      for (var o = 10; o > -1; --o) {
+        console.log(o, data);
+      };
+    };
+    print(data);
+  };
+  xmlHttp.send();
+};
+sus();
+
+
+
 /* 
 //funlink.io
 function sus() {
