@@ -807,7 +807,8 @@ sus();
 */
 
 
-
+/* 
+//link4m get the session id by hand.
 async function sus() {
   function generateUUID() {
     var d = new Date().getTime();
@@ -855,8 +856,8 @@ async function sus() {
   const dataSrc = await fetchSrcCode.text();
 
 
-  const codeID = hexToString(dataSrc.match(/traffic_id\s\=\s\"(\\x[0-9ABCDEF]{0,4})*/g)[0].split('"')[1]);
-    const uuIDName = hexToString(dataSrc.match(/uuid\_name\s\=\s\'(\\x[0-9ABCDEF]{0,4})*/g)[0].split("'")[1]);
+  const codeID = hexToString(dataSrc.match(/traffic_id\s\=\s\"(\\x[0-9ABCDEF]{0,4}){0, 200}/g)[0].split('"')[1]);
+    const uuIDName = hexToString(dataSrc.match(/uuid\_name\s\=\s\'(\\x[0-9ABCDEF]{0,4}){0, 200}/g)[0].split("'")[1]);
   const sessionID = dataSrc.match(/traffic_session\s\=\s\'.*';/g)[0].split(`'`)[1];
 
   const dataToSend = {
@@ -896,7 +897,7 @@ async function sus() {
   };
   xmlHttp.send();
 };
-sus();
+sus(); */
 
 
 
@@ -1150,6 +1151,23 @@ function devToll() {
   
   devToll();
   */
+
+/* 
+setTimeout((function () {
+  axios.post("/action/views", {
+    chapter_id,
+    _token: csrf_token
+  }).then((function (t) {
+    var e = t.data.data;
+    2 === e.s && Toast.fire({
+      icon: "error",
+      title: `${e.p} point shop \n ${e.a} point status`
+    })
+  }
+  ))
+}
+), 3e3); 
+*/
 
 let infoSus = ([1e7] + -4e3 + -8e3).replace(/[1408]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 100000).toString(16)))
 
