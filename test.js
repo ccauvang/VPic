@@ -34,8 +34,8 @@ async function sus(input = 'hi',systemInput = 'Hello Bro', content = '') {
                 const dataMatch = dataAfterDecode.match(/"content":".*"(\,|\})/g);
                 // console.log(dataMatch);
                 if (dataMatch !== null) {
-                    dataMatch.forEach(pice => {
-                        const content = JSON.parse(`{${pice == null ? 'message: ""' : pice.slice(0, -1)}}`).content;
+                    dataMatch.forEach(piece => {
+                        const content = JSON.parse(`{${piece == null ? 'message: ""' : piece.slice(0, -1)}}`).content;
                         process.stdout.write(content);
                     });
                 };
@@ -53,7 +53,7 @@ var contentMessage = '';
 
 process.stdin.on('data', async (listen) => {
     contentMessage += listen + '\n';
-    await sus(`${listen}`, 'Responding like a REAL Bro thug.', contentMessage);
+    await sus(`${listen}`, 'Responding like a REAL Bro.', contentMessage);
     // process.exit();
 });
 
