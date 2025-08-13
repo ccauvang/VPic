@@ -1,5 +1,4 @@
-
-async function sus(input = 'hi',systemInput = 'Hello Bro', content = '') {
+async function sus(input = 'hi', systemInput = 'Hello Bro', content = '') {
     input += 'Respond this in English';
     const dataRaw = {
         "messages": [
