@@ -51,13 +51,15 @@ console.log('Enter prompt: ');
 var contentMessage = '';
 
 process.stdin.on('data', async (listen) => {
-    contentMessage += listen + '\n';
+    contentMessage += listen + 
+
+'\n';
     await sus(`${listen}`, 'Responding like a REAL Bro.', contentMessage);
     // process.exit();
 }); */
 
 
-function findSubs(n1, n2) {
+/* function findSubs(n1, n2) {
     if (n1 > n2) return false;
 
     let freg = {};
@@ -99,7 +101,140 @@ function findSubs(n1, n2) {
 
 console.time('lol');
 console.log(findSubs('abc', 'hbbbbbcaaooo'));
-console.timeEnd('lol');
+console.timeEnd('lol'); */
 
 //abc
 //haabcaooo
+
+
+
+
+
+
+function _0xaf6b(A, n) {
+    const e = _0x200f();
+    return (_0xaf6b = function (A, n) {
+        return e[A -= 395]
+    }
+    )(A, n)
+}
+
+
+function _0x200f() {
+    const A = [];
+
+    return A
+}
+
+
+
+// console.time('lol');
+// console.log(_0xaf6b(16750));
+
+
+let arr = _0x200f();       // your 20,406 array
+let N = arr.length;
+
+// indexes used by obfuscator
+let required = [
+    16750 - 395,
+    19591 - 395,
+    11217 - 395,
+    4664 - 395,
+    9078 - 395,
+    16015 - 395,
+    15998 - 395,
+    3636 - 395,
+    10094 - 395,
+    6424 - 395
+];
+
+// helper: check is numeric
+function looksNumber(x) {
+    return typeof x === "string" && /^[0-9]/.test(x);
+}
+
+// find rotation offset R
+let R = -1;
+for (let r = 0; r < N; r++) {
+    let ok = true;
+
+    for (let idx of required) {
+        let val = arr[(idx +
+
+            r) % N];
+        if (!looksNumber(val)) {
+            ok = false;
+            break;
+        }
+    }
+
+    if (ok) {
+        R = r;
+        break;
+    }
+}
+
+console.log("Rotation offset =", R);
+
+// build final rotated array
+let final = new Array(N);
+for (let i = 0; i < N; i++) {
+    final[i] = arr[(i +
+
+        R) % N];
+}
+
+// real decoder
+function decode(x) {
+    return final[x - 395];
+}
+
+const A = decode;
+
+const eeee =
+    'hi'
+
+// const apvtop = decode(2886) + decode(1271) + decode(18514);
+// console.log(apvtop);
+// console.log(decode(2265));
+
+const fs = require("fs");
+
+// fs.writeFileSync("shifted_array.json", JSON.stringify(final, null, 2));
+
+const util = require('util');
+
+process.stdin.setDefaultEncoding('utf8');
+
+console.log('Enter Numer to deofuscate: ');
+
+
+process.stdin.on('data', async (listen) => {
+    listen = listen.toString().replace(/[a-zA-Z\)\(\]\[\+]/gm, '').trim();
+    if (listen.includes(' ')) {
+        var brakeIt = listen.split(' ');
+        var message = '';
+        // console.log(brakeIt);
+        brakeIt.forEach(pic => {
+            if (pic != '') {
+                message += decode(parseInt(pic));
+            }
+        });
+        console.log(message);
+        require('child_process').spawn('clip').stdin.end(util.inspect(`${message}`));
+    } else {
+        console.log(decode(parseInt(listen)));
+        require('child_process').spawn('clip').stdin.end(util.inspect(`${decode(parseInt(listen))}`));
+    };
+
+
+
+    // process.exit();
+});
+
+// console.timeEnd('lol');
+
+
+
+
