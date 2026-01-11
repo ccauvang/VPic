@@ -27,7 +27,7 @@ html, body {
   flex-direction: column;*/
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   /*filter: blur(3em);*/
 }
 
