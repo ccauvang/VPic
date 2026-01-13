@@ -833,71 +833,134 @@ async function sus() {
     return outputStr;
   };
 
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+  const logs = iframe.contentWindow.console;
+
   var getSrc = document.getElementsByTagName('script');
   var srcLen = getSrc.length;
 
-  var trashID = 'https://s1.what-on.com/';
-  var trashIdSrc = '';
+  var trashID = '';
+  var trashSrc = 'https://s1.what-on.com/';
 
   // https://s1.what-on.com/widget/service.js?key=HMRYKQQ
   for (var i = 0; i < srcLen; ++i) {
-    const matchSource = getSrc[i].src.match(/widget\/(script|service|service\-v2)\.js\?key\=.{0,10}/g);
+    const matchSource = getSrc[i].src.match(/widget\/(script|service|service\-v2|service\-v3)\.js\?key\=.{0,10}/g);
     if ((getSrc[i].src != '') && (matchSource != null)) {
-      trashID += matchSource[0].split('=')[0] + '=' + matchSource[0].split('=')[1];
-      trashIdSrc = matchSource[0].split('=')[1];
+      trashID = matchSource[0].split('=')[1];
+      trashSrc += matchSource[0].split('=')[0] + '=' + trashID;
       break;
     };
   };
 
-  const fetchSrcCode = await fetch(trashID, {
-    method: 'GET'
-  });
+  var verHaveQuest = true;
 
-  const dataSrc = await fetchSrcCode.text();
+  if (`${trashSrc}`.includes('service.js')) {
+    verHaveQuest = false;
+  }
+  //REPLACE HERE.
+  const sessionID = '6966501d5ffb2165e70bc089';
+  //traffic_id
+  const codeID = '\x32\x66\x33\x62\x38\x66\x35\x66\x37\x33\x38\x63\x39\x37\x31\x30\x37\x64\x31\x36\x39\x65\x34\x63\x30\x63\x62\x61\x32\x35\x62\x34';
+  //traffic_key
+  const keyL = '\x6D\x69\x74\x4C\x33\x47\x4B\x70';
 
+  const TFKey = keyL || trashID;
 
-  const codeID = hexToString(dataSrc.match(/traffic_id\s\=\s\"(\\x[0-9ABCDEF]{0,4}){0, 200}/g)[0].split('"')[1]);
-    const uuIDName = hexToString(dataSrc.match(/uuid\_name\s\=\s\'(\\x[0-9ABCDEF]{0,4}){0, 200}/g)[0].split("'")[1]);
-  const sessionID = dataSrc.match(/traffic_session\s\=\s\'.*';/g)[0].split(`'`)[1];
+  var idStep = '';
+  const clientID = generateUUID();
 
-  const dataToSend = {
-    // code: codeID,
-    // session: sessionID,
-    // screen: '1746 x 982',
-    // browser: 'Chrome',
-    // browserVersion: '136.0.0.0',
-    // browserMajorVersion: 136,
-    // mobile: 'false',
-    // os: 'window',
-    // osVersion: 10,
-    // cookies: true,
-    // flashVersion: 'no chcek',
-    // lang: 'en-US',
-    clientID: generateUUID(),
+  window.jscd = {
+    screen: '1746 x 982',
+    browser: 'Chrome',
+    browserVersion: '143.0.0.0',
+    browserMajorVersion: '143',
+    mobile: false,
+    os: 'Windows',
+    osVersion: 10,
+    cookies: true,
+    flashVersion: 'no check',
+    lang: 'en-US',
+    client_id: clientID,
     pathname: window.location.pathname,
     href: window.location.href,
     hostname: window.location.hostname
   };
 
-  const sessionTrash = '6830b289fc185736b017696a';
-  const IDTrash = localStorage.getItem(uuIDName);
+  async function clientCall(sID, key) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.withCredentials = true;
+    xmlhttp.open("POST", "https://s1.what-on.com/widget/client.js", true);
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xmlhttp.onload = function () {
+      if (xmlhttp.status === 200) {
+        eval(xmlhttp.responseText);
+      }
+    };
+    var params = 'traffic_session=' + sID + '&key=' + key + '&' + jQuery.param(jscd);
+    xmlhttp.send(params);
+  };
 
+  async function getIDStepOrCode(code, sID, key, quest = true, haveAStep = true,) {
 
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.withCredentials = true;
-  xmlHttp.open('GET', `https://s1.what-on.com/widget/get_quest_code.html?code=${codeID}&traffic_session=${sessionTrash}&screen=1746%20x%20982&browser=Chrome&browserVersion=136.0.0.0&browserMajorVersion=136&mobile=false&os=Windows&osVersion=10&cookies=true&flashVersion=no%20check&lang=en-US&client_id=${IDTrash}&pathname=${encodeURIComponent(dataToSend.pathname)}&href=${encodeURIComponent(dataToSend.href)}&hostname=${encodeURIComponent(dataToSend.hostname)}`);
-  xmlHttp.onreadystatechange = () => {
-    const data = JSON.parse(xmlHttp.responseText)
-        function print(data) {
-      for (var o = 10; o > -1; --o) {
-        console.log(o, data);
+    var url = `https://s1.what-on.com/widget/get${quest == true ? '_quest' : ''}_code.html?code=${code}&traffic_session=${sID}&key=${key}&${jQuery.param(jscd)}`;
+    if (haveAStep) {
+      url = `https://s1.what-on.com/widget/get${quest == true ? '_quest' : ''}_code.html?id=${idStep}&code=${code}&traffic_session=${sID}&key=${key}&${jQuery.param(jscd)}`;
+    }
+
+    var xmlHttp2 = new XMLHttpRequest();
+    xmlHttp2.withCredentials = true;
+    xmlHttp2.open('GET', url);
+    xmlHttp2.onload = async () => {
+      if (xmlHttp2.status === 200) {
+        const data = JSON.parse(xmlHttp2.responseText);
+
+        if (data['id']) {
+          idStep = data.id;
+          if (jscd['request']) {
+            delete jscd['request'];
+          };
+          const fetchSrcCode = await fetch(trashSrc, {
+            method: 'GET'
+          });
+
+          const dataSrc = await fetchSrcCode.text();
+
+          const sessionIDFake = dataSrc.match(/(var\s[a-z0-9]{0,6}\s=\s\')(.{0,24})/g)[0].split(`'`)[1];
+
+          setTimeout(() => {
+            if (idStep != '') {
+              clientCall(sessionIDFake, key);
+              setTimeout(() => {
+                getIDStepOrCode(code, sessionIDFake, key, verHaveQuest, true);
+              }, 10000);
+            };
+          }, 3000);
+
+        } else if (data['html']) {
+          if (data.html.length == 6) {
+            function print(data) {
+              for (var o = 10; o > -1; --o) {
+                logs.log(o, data);
+              };
+            };
+            print(data);
+          };
+        };
       };
     };
-    print(data);
-  };
-  xmlHttp.send();
+    xmlHttp2.send();
+  }
+
+  clientCall(sessionID, TFKey);
+  setTimeout(() => {
+    getIDStepOrCode(codeID, sessionID, TFKey, verHaveQuest, false);
+  }, 10000);
+
 };
-sus(); */
+sus();
+*/
 
 
 
