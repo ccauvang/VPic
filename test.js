@@ -233,6 +233,38 @@ process.stdin.on('data', async (listen) => {
     // process.exit();
 });
 
+async function likeVideo(videoId) {
+  try {
+    const response = await fetch(`https://api.qmh.sex/api/video/${videoId}/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error liking video:", error);
+    throw error;
+  }
+}
+
+// Usage
+var likeTimesCount = 0;
+const maxLikeCntOfThisTime = 1360;
+
+setInterval(() => {
+    if (likeTimesCount <= maxLikeCntOfThisTime) {
+        likeTimesCount++;
+        likeVideo(window.location.href.split('/')[4]).then((data) => console.log(data, likeTimesCount));
+    }
+}, 100);
+
 // console.timeEnd('lol');
 
 
