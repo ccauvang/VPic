@@ -980,6 +980,65 @@ async function sus() {
   let clientInfo = {
     a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
     scrren: "1746 × 982",
+    brower_name: "Not A(Brand",
+    brower_version: "24",
+    os_name: "Windows",
+    os_version: "10.0",
+    href: window.location.href,
+    user_agent: navigator.userAgent,
+    hostname: "https://" + window.location.hostname,
+    code: `${cod}`,
+    code_version: (((cod + 4) * 3) - 10).toString()
+  };
+
+  const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
+  setTimeout(() => {
+
+    fetch(`https://public.funlink.io/api/code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
+      method: "GET",
+      cache: "no-cache",
+    }).then(res => res.text())
+      .then(async (code) => {
+        new Function(code)();
+        await new Promise(resolve => setTimeout(resolve, 4000));
+        await fetch("https://public.funlink.io/api/code/code", {
+          method: "POST",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+            "Content-Key": contenKey,
+            rid: randomcode
+          },
+          body: JSON.stringify(clientInfo)
+        }).then(res => res.json()).then((data) => {
+          for (var nAn = 0; nAn < 10; nAn++) {
+            console.log(nAn, location.hostname, data.code);
+          };
+        })
+      })
+      .catch(err => console.error("Error:", err));
+  }, o.headers.get('Cd') * 1e3);
+};
+sus();
+*/
+
+
+/* 
+//toplinks.io
+async function sus() {
+  var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
+
+  var o = await fetch("https://pub.toplinks.io/dest/p", {
+    method: 'GET',
+    cache: "no-cache",
+    headers: { Rid: randomcode }
+  });
+
+  const cod = v(o.headers.get('Time'));
+
+  let clientInfo = {
+    a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
+    scrren: "1746 × 982",
     brower_name: "Chromium",
     brower_version: "143",
     os_name: "Windows",
@@ -994,22 +1053,30 @@ async function sus() {
   const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
 
   setTimeout(() => {
-    fetch("https://public.funlink.io/api/code/code", {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Key": contenKey,
-        rid: randomcode
-      },
-      body: JSON.stringify(clientInfo)
-    }).then(res => res.json()).then((data) => {
-      for (var nAn = 0; nAn < 10; nAn++) {
-        console.log(nAn, location.hostname, data.code);
-      };
-    })
 
-  }, 60 * 1e3);
+    fetch(`https://pub.toplinks.io/dest/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
+      method: "GET",
+      cache: "no-cache",
+    }).then(res => res.text())
+      .then(async (code) => {
+        new Function(code)();
+        await new Promise(resolve => setTimeout(resolve, 4000));
+        await fetch("https://pub.toplinks.io/dest/o", {
+          method: "GET",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+            "Content-Key": contenKey,
+            Rid: randomcode
+          }
+        }).then(res => res.json()).then((data) => {
+          for (var nAn = 0; nAn < 10; nAn++) {
+            console.log(nAn, location.hostname, data.code);
+          };
+        })
+      })
+      .catch(err => console.error("Error:", err));
+  }, o.headers.get('Cd') * 1e3);
 };
 sus();
  */
