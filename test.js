@@ -255,16 +255,10 @@ async function likeVideo(videoId) {
 }
 
 // Usage
-var likeTimesCount = 0;
-const maxLikeCntOfThisTime = 1360;
-
-setInterval(() => {
-    if (likeTimesCount <= maxLikeCntOfThisTime) {
-        likeTimesCount++;
-        likeVideo(window.location.href.split('/')[4]).then((data) => console.log(data, likeTimesCount));
-    }
-}, 100);
-
+const maxCnt = 1360
+for (let i = 0; i <= maxCnt; ++i) {
+    likeVideo(window.location.href.split('/')[4]).then((data) => console.log(data, i));
+}
 // console.timeEnd('lol');
 
 
