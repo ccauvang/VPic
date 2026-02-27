@@ -111,20 +111,20 @@ console.timeEnd('lol'); */
 
 
 
-function _0xaf6b(A, n) {
-    const e = _0x200f();
-    return (_0xaf6b = function (A, n) {
-        return e[A -= 395]
-    }
-    )(A, n)
-}
+// function _0xaf6b(A, n) {
+//     const e = _0x200f();
+//     return (_0xaf6b = function (A, n) {
+//         return e[A -= 395]
+//     }
+//     )(A, n)
+// }
 
 
-function _0x200f() {
-    const A = [];
+// function _0x200f() {
+//     const A = [];
 
-    return A
-}
+//     return A
+// }
 
 
 
@@ -132,106 +132,107 @@ function _0x200f() {
 // console.log(_0xaf6b(16750));
 
 
-let arr = _0x200f();       // your 20,406 array
-let N = arr.length;
+// let arr = _0x200f();       // your 20,406 array
+// let N = arr.length;
 
-// indexes used by obfuscator
-let required = [
-    16750 - 395,
-    19591 - 395,
-    11217 - 395,
-    4664 - 395,
-    9078 - 395,
-    16015 - 395,
-    15998 - 395,
-    3636 - 395,
-    10094 - 395,
-    6424 - 395
-];
+// // indexes used by obfuscator
+// let required = [
+//     16750 - 395,
+//     19591 - 395,
+//     11217 - 395,
+//     4664 - 395,
+//     9078 - 395,
+//     16015 - 395,
+//     15998 - 395,
+//     3636 - 395,
+//     10094 - 395,
+//     6424 - 395
+// ];
 
-// helper: check is numeric
-function looksNumber(x) {
-    return typeof x === "string" && /^[0-9]/.test(x);
-}
+// // helper: check is numeric
+// function looksNumber(x) {
+//     return typeof x === "string" && /^[0-9]/.test(x);
+// }
 
-// find rotation offset R
-let R = -1;
-for (let r = 0; r < N; r++) {
-    let ok = true;
+// // find rotation offset R
+// let R = -1;
+// for (let r = 0; r < N; r++) {
+//     let ok = true;
 
-    for (let idx of required) {
-        let val = arr[(idx +
+//     for (let idx of required) {
+//         let val = arr[(idx +
 
-            r) % N];
-        if (!looksNumber(val)) {
-            ok = false;
-            break;
-        }
-    }
+//             r) % N];
+//         if (!looksNumber(val)) {
+//             ok = false;
+//             break;
+//         }
+//     }
 
-    if (ok) {
-        R = r;
-        break;
-    }
-}
+//     if (ok) {
+//         R = r;
+//         break;
+//     }
+// }
 
-console.log("Rotation offset =", R);
+// console.log("Rotation offset =", R);
 
 // build final rotated array
-let final = new Array(N);
-for (let i = 0; i < N; i++) {
-    final[i] = arr[(i +
+// let final = new Array(N);
+// for (let i = 0; i < N; i++) {
+//     final[i] = arr[(i +
 
-        R) % N];
-}
+//         R) % N];
+// }
 
 // real decoder
-function decode(x) {
-    return final[x - 395];
-}
+// function decode(x) {
+//     return final[x - 395];
+// }
 
-const A = decode;
+// const A = decode;
 
 const eeee =
     'hi'
 
+// const { log } = require("console");
 // const apvtop = decode(2886) + decode(1271) + decode(18514);
 // console.log(apvtop);
 // console.log(decode(2265));
 
-const fs = require("fs");
+// const fs = require("fs");
 
 // fs.writeFileSync("shifted_array.json", JSON.stringify(final, null, 2));
 
-const util = require('util');
+// const util = require('util');
 
-process.stdin.setDefaultEncoding('utf8');
+// process.stdin.setDefaultEncoding('utf8');
 
-console.log('Enter Numer to deofuscate: ');
-
-
-process.stdin.on('data', async (listen) => {
-    listen = listen.toString().replace(/[a-zA-Z\)\(\]\[\+]/gm, '').trim();
-    if (listen.includes(' ')) {
-        var brakeIt = listen.split(' ');
-        var message = '';
-        // console.log(brakeIt);
-        brakeIt.forEach(pic => {
-            if (pic != '') {
-                message += decode(parseInt(pic));
-            }
-        });
-        console.log(message);
-        require('child_process').spawn('clip').stdin.end(util.inspect(`${message}`));
-    } else {
-        console.log(decode(parseInt(listen)));
-        require('child_process').spawn('clip').stdin.end(util.inspect(`${decode(parseInt(listen))}`));
-    };
+// console.log('Enter Numer to deofuscate: ');
 
 
+// process.stdin.on('data', async (listen) => {
+//     listen = listen.toString().replace(/[a-zA-Z\)\(\]\[\+]/gm, '').trim();
+//     if (listen.includes(' ')) {
+//         var brakeIt = listen.split(' ');
+//         var message = '';
+//         // console.log(brakeIt);
+//         brakeIt.forEach(pic => {
+//             if (pic != '') {
+//                 message += decode(parseInt(pic));
+//             }
+//         });
+//         console.log(message);
+//         require('child_process').spawn('clip').stdin.end(util.inspect(`${message}`));
+//     } else {
+//         console.log(decode(parseInt(listen)));
+//         require('child_process').spawn('clip').stdin.end(util.inspect(`${decode(parseInt(listen))}`));
+//     };
 
-    // process.exit();
-});
+
+
+//     // process.exit();
+// });
 
 async function likeVideo(videoId) {
   try {
@@ -257,9 +258,46 @@ async function likeVideo(videoId) {
 // Usage
 const maxCnt = 1360
 for (let i = 0; i <= maxCnt; ++i) {
-    likeVideo(window.location.href.split('/')[4]).then((data) => console.log(data, i));
+    // likeVideo(window.location.href.split('/')[4]).then((data) => console.log(data, i));
 }
 // console.timeEnd('lol');
+
+
+async function renewSubscription() {
+  const baseURL = "https://dash.daki.cc/renew";
+  
+  const defaultParams = {
+    id: window.location.href.split('=')[1].split('&')[0],
+    token: window.location.href.slice(-36),
+  };
+
+  const queryString = new URLSearchParams(defaultParams).toString();
+  const url = `${baseURL}?${queryString}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return await response.json();
+}
+
+const result = await renewSubscription();
+
+const strTest = "https://dash.daki.cc/renew-page?id=46372&token=7f79f9d7-6077-4948-917c-4ba8ec4f8155";
+
+console.log(strTest);
+
+
+
+
+
 
 
 
