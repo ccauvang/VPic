@@ -235,24 +235,24 @@ const eeee =
 // });
 
 async function likeVideo(videoId) {
-  try {
-    const response = await fetch(`https://api.qmh.sex/api/video/${videoId}/like`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+        const response = await fetch(`https://api.qmhub.vip/api/video/${videoId}/like`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error liking video:", error);
+        throw error;
     }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error liking video:", error);
-    throw error;
-  }
 }
 
 // Usage
@@ -264,28 +264,28 @@ for (let i = 0; i <= maxCnt; ++i) {
 
 
 async function renewSubscription() {
-  const baseURL = "https://dash.daki.cc/renew";
-  
-  const defaultParams = {
-    id: window.location.href.split('=')[1].split('&')[0],
-    token: window.location.href.slice(-36),
-  };
+    const baseURL = "https://dash.daki.cc/renew";
 
-  const queryString = new URLSearchParams(defaultParams).toString();
-  const url = `${baseURL}?${queryString}`;
+    const defaultParams = {
+        id: window.location.href.split('=')[1].split('&')[0],
+        token: window.location.href.slice(-36),
+    };
 
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+    const queryString = new URLSearchParams(defaultParams).toString();
+    const url = `${baseURL}?${queryString}`;
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
 
-  return await response.json();
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
 }
 
 const result = await renewSubscription();
