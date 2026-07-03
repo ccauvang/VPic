@@ -1083,58 +1083,127 @@ sus();
 
 
 /* 
-//toplinks.io
+//dr.funlink.io
 async function sus() {
-  const randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
-  var o = await fetch("https://pub.toplinks.io/dest/p", {
-    method: "GET",
+  var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
+
+  var o = await fetch("https://public-dr.funlink.io/api/code/ch", {
+    method: 'OPTIONS',
     cache: "no-cache",
     headers: { rid: randomcode }
   });
 
-  var cod = v(o.headers.get('Time'));
-
+  const cod = v(o.headers.get('Time'));
 
   let clientInfo = {
-    send_my_son: "'Con trai bố cũng thông minh đấy, cố lên con' _ father said",
-    by_pass: "'Bypass = Gánh nghiệp cho các bố nhé' _ Bố của bypass said",
-    screen: '2650 × 1060',
-    brower_name: 'Chromium',
-    brower_version: '141',
+    a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
+    scrren: "1746 × 982",
+    brower_name: "Not A(Brand",
+    brower_version: "24",
     os_name: "Windows",
     os_version: "10.0",
     href: window.location.href,
     user_agent: navigator.userAgent,
-    hostname: "https://" + window.location.host,
-    code: cod.toString(),
-    code_version: (((cod + 4) * 3) - 10).toString(),
-  }
-
-  const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
-  async function vkl(info, code) {
-    var e = await fetch("https://pub.toplinks.io/dest/o", {
-      method: "GET",
-      cache: "no-cache",
-      headers: {
-        "Content-Key": contenKey,
-        "Content-Type": "application/json",
-        rid: code
-      },
-    });
-    return e.json();
+    hostname: "https://" + window.location.hostname,
+    code: `${cod}`,
+    code_version: (((cod + 4) * 3) - 10).toString()
   };
 
+  const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
   setTimeout(() => {
-    vkl(clientInfo, randomcode).then(n => {
-      for (var nAn = 0; nAn < 10; nAn++) {
-        console.log(nAn, location.hostname, n.code);
-      };
-    })
-  }, 60 * 1e3);
+
+    fetch(`https://public-dr.funlink.io/api/code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
+      method: "GET",
+      cache: "no-cache",
+    }).then(res => res.text())
+      .then(async (code) => {
+        new Function(code)();
+        await new Promise(resolve => setTimeout(resolve, 4000));
+        await fetch("https://public-dr.funlink.io/api/code/code", {
+          method: "POST",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+            "Content-Key": contenKey,
+            rid: randomcode
+          },
+          body: JSON.stringify(clientInfo)
+        }).then(res => res.json()).then((data) => {
+          for (var nAn = 0; nAn < 10; nAn++) {
+            console.log(nAn, location.hostname, data.code);
+          };
+        })
+      })
+      .catch(err => console.error("Error:", err));
+  }, o.headers.get('Cd') * 1e3);
 };
 sus();
- */
+*/
 
+/* 
+//taplayma.com
+async function sus() {
+  function getCodeFromScripts() {
+    const scripts = document.querySelectorAll('script[src*="taplayma.com"]');
+    for (const s of scripts) {
+      const id = new URL(s.src).searchParams.get("id");
+      if (id) return id;
+    }
+    return null;
+  }
+  try {
+    // step
+    const res1 = await fetch("https://api.taplayma.com/step", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `code=${getCodeFromScripts()}&token=`
+    });
+    if (!res1.ok) throw new Error(`step failed: ${res1.status}`);
+    const data = await res1.json();
+    console.log(data);
+
+    await new Promise(r => setTimeout(r, 3000));
+
+    // countdown
+    const res2 = await fetch("https://api.taplayma.com/countdown", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `code=${getCodeFromScripts()}&token=${data.token}`
+    });
+    if (!res2.ok) throw new Error(`countdown failed: ${res2.status}`);
+    const data2 = await res2.json();
+    console.log(data2);
+
+    await new Promise(r => setTimeout(r, data2.timer * 1000));
+
+    // continue (back to XHR)
+    const dataSend = `code=${getCodeFromScripts()}&token=${data.token}`;
+    const xhr3 = new XMLHttpRequest();
+    xhr3.open("POST", "https://api.taplayma.com/continue", true);
+    xhr3.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr3.onreadystatechange = function () {
+      if (xhr3.readyState === XMLHttpRequest.DONE) {
+        if (xhr3.status === 200) {
+          var dataCode = JSON.parse(xhr3.responseText);
+          for (var i = 0; i < 10; ++i) {
+            console.log(window.location.hostname, dataCode.code, i);
+          }
+        } else {
+          console.error("Request failed:", xhr3.status);
+        }
+      }
+    };
+
+    xhr3.send(dataSend);
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+sus();
+*/
 
 
 /* 
