@@ -1205,6 +1205,70 @@ async function sus() {
 sus();
 */
 
+/* 
+//nhapma.com
+async function sus() {
+  function getCodeFromScripts() {
+    const scripts = document.querySelectorAll('script[src*="nhapma.com"]');
+    for (const s of scripts) {
+      const id = new URL(s.src).searchParams.get("id");
+      if (id) return id;
+    }
+    return null;
+  }
+  try {
+    // step
+    const res1 = await fetch("https://service.nhapma.com/step", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `code=${getCodeFromScripts()}&token=`
+    });
+    if (!res1.ok) throw new Error(`step failed: ${res1.status}`);
+    const data = await res1.json();
+    console.log(data);
+
+    await new Promise(r => setTimeout(r, 3000));
+
+    // countdown
+    const res2 = await fetch("https://service.nhapma.com/countdown", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `code=${getCodeFromScripts()}&token=${data.token}`
+    });
+    if (!res2.ok) throw new Error(`countdown failed: ${res2.status}`);
+    const data2 = await res2.json();
+    console.log(data2);
+
+    await new Promise(r => setTimeout(r, data2.timer * 1000));
+
+    // continue (back to XHR)
+    const dataSend = `code=${getCodeFromScripts()}&token=${data.token}`;
+    const xhr3 = new XMLHttpRequest();
+    xhr3.open("POST", "https://service.nhapma.com/continue", true);
+    xhr3.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr3.onreadystatechange = function () {
+      if (xhr3.readyState === XMLHttpRequest.DONE) {
+        if (xhr3.status === 200) {
+          var dataCode = JSON.parse(xhr3.responseText);
+          for (var i = 0; i < 10; ++i) {
+            console.log(window.location.hostname, dataCode.code, i);
+          }
+        } else {
+          console.error("Request failed:", xhr3.status);
+        }
+      }
+    };
+
+    xhr3.send(dataSend);
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+sus();
+*/
 
 /* 
 //seotrieuview
