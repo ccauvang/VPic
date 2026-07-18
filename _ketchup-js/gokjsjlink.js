@@ -808,7 +808,7 @@ sus();
 
 
 /* 
-//link4m get the session id by hand.
+//link4m link2m get the session id by hand.
 async function sus() {
   function generateUUID() {
     var d = new Date().getTime();
@@ -823,16 +823,6 @@ async function sus() {
     });
   };
 
-  function hexToString(stirngHex = '') {
-    const hexs = stirngHex.match(/(\\x[0-9ABCDEF]{0,4})/g);
-
-    var outputStr = '';
-    for (var i = 0; i < hexs.length; ++i) {
-      outputStr += String.fromCharCode(parseInt(hexs[i].split('\\x')[1], 16))
-    };
-    return outputStr;
-  };
-
   const iframe = document.createElement('iframe');
   iframe.style.display = 'none';
   document.body.appendChild(iframe);
@@ -843,6 +833,10 @@ async function sus() {
 
   var trashID = '';
   var trashSrc = 'https://s1.what-on.com/';
+  // var trashSrc = 'https://website-analytics.net/';
+
+  // Domain to fetch
+  const trashDomain = trashSrc;
 
   // https://s1.what-on.com/widget/service.js?key=HMRYKQQ
   for (var i = 0; i < srcLen; ++i) {
@@ -859,12 +853,13 @@ async function sus() {
   if (`${trashSrc}`.includes('service.js')) {
     verHaveQuest = false;
   }
+
   //REPLACE HERE.
-  const sessionID = '6966501d5ffb2165e70bc089';
+  const sessionID = '6a5b2126acfb3509e102da00';
   //traffic_id
-  const codeID = '\x32\x66\x33\x62\x38\x66\x35\x66\x37\x33\x38\x63\x39\x37\x31\x30\x37\x64\x31\x36\x39\x65\x34\x63\x30\x63\x62\x61\x32\x35\x62\x34';
+  const codeID = '\x33\x37\x65\x66\x63\x66\x35\x39\x38\x33\x38\x32\x35\x33\x33\x66\x33\x39\x61\x38\x33\x37\x66\x66\x38\x30\x35\x63\x38\x66\x66\x30';
   //traffic_key
-  const keyL = '\x6D\x69\x74\x4C\x33\x47\x4B\x70';
+  const keyL = '\x39\x47\x53\x71\x4B';
 
   const TFKey = keyL || trashID;
 
@@ -891,7 +886,7 @@ async function sus() {
   async function clientCall(sID, key) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.withCredentials = true;
-    xmlhttp.open("POST", "https://s1.what-on.com/widget/client.js", true);
+    xmlhttp.open("POST", `${trashDomain}widget/client.js`, true);
     xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xmlhttp.onload = function () {
       if (xmlhttp.status === 200) {
@@ -904,9 +899,9 @@ async function sus() {
 
   async function getIDStepOrCode(code, sID, key, quest = true, haveAStep = true,) {
 
-    var url = `https://s1.what-on.com/widget/get${quest == true ? '_quest' : ''}_code.html?code=${code}&traffic_session=${sID}&key=${key}&${jQuery.param(jscd)}`;
+    var url = `${trashDomain}widget/get${quest == true ? '_quest' : ''}_code.html?code=${code}&traffic_session=${sID}&key=${key}&${jQuery.param(jscd)}`;
     if (haveAStep) {
-      url = `https://s1.what-on.com/widget/get${quest == true ? '_quest' : ''}_code.html?id=${idStep}&code=${code}&traffic_session=${sID}&key=${key}&${jQuery.param(jscd)}`;
+      url = `${trashDomain}widget/get${quest == true ? '_quest' : ''}_code.html?id=${idStep}&code=${code}&traffic_session=${sID}&key=${key}&${jQuery.param(jscd)}`;
     }
 
     var xmlHttp2 = new XMLHttpRequest();
@@ -934,9 +929,9 @@ async function sus() {
               clientCall(sessionIDFake, key);
               setTimeout(() => {
                 getIDStepOrCode(code, sessionIDFake, key, verHaveQuest, true);
-              }, 10000);
+              }, 15000);
             };
-          }, 3000);
+          }, 5000);
 
         } else if (data['html']) {
           if (data.html.length == 6) {
@@ -956,12 +951,11 @@ async function sus() {
   clientCall(sessionID, TFKey);
   setTimeout(() => {
     getIDStepOrCode(codeID, sessionID, TFKey, verHaveQuest, false);
-  }, 10000);
+  }, 15000);
 
 };
 sus();
 */
-
 
 
 /* 
