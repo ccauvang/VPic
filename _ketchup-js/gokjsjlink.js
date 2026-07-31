@@ -1018,6 +1018,252 @@ sus();
 
 
 /* 
+//ontops.link
+async function sus() {
+  var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
+
+  var o = await fetch("https://api-client.ontops.link/api/process-code/ping", {
+    method: 'OPTIONS',
+    cache: "no-cache",
+    headers: { Rid: randomcode }
+  });
+
+  const cod = v(o.headers.get('Time'));
+
+  let clientInfo = {
+    a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
+    scrren: "1746 × 982",
+    brower_name: "Chromium",
+    brower_version: "143",
+    os_name: "Windows",
+    os_version: "10.0",
+    href: window.location.href,
+    user_agent: navigator.userAgent,
+    hostname: "https://" + window.location.hostname,
+    code: `${cod}`,
+    code_version: (((cod + 4) * 3) - 10).toString()
+  };
+
+  const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
+
+  setTimeout(() => {
+
+    fetch(`https://api-client.ontops.link/api/process-code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
+      method: "GET",
+      cache: "no-cache",
+    }).then(res => res.text())
+      .then(async (code) => {
+        new Function(code)();
+        await new Promise(resolve => setTimeout(resolve, 4000));
+        await fetch("https://api-client.ontops.link/api/process-code/create-code", {
+          method: "POST",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+            "Content-Key": contenKey,
+            Rid: randomcode
+          },
+          body: JSON.stringify(clientInfo)
+        }).then(res => res.json()).then(async (data) => {
+          let done = false;
+          const box = document.createElement('div');
+          box.style.cssText = 'position:fixed; top:10px; right:10px; z-index:2147483647; background:#fff; border:1px solid #ccc; padding:8px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.3);';
+          const img = document.createElement('img');
+          img.style.cssText = 'width:200px; display:block; margin-bottom:6px; border:1px solid #fff;';
+          const btnRow = document.createElement('div');
+          btnRow.style.cssText = 'display:flex; gap:6px;';
+          const btnA = document.createElement('button');
+          btnA.textContent = 'A';
+          const btnB = document.createElement('button');
+          btnB.textContent = 'B';
+          const btnC = document.createElement('button');
+          btnC.textContent = 'C';
+          const btnStyle = 'border:2px solid #fff; border-radius:4px; padding:4px 10px; cursor:pointer;';
+          btnA.style.cssText = btnStyle;
+          btnB.style.cssText = btnStyle;
+          btnC.style.cssText = btnStyle;
+
+          btnRow.append(btnA, btnB, btnC);
+          box.append(img, btnRow);
+          document.body.appendChild(box);
+
+          await new Promise(resolve => setTimeout(resolve, 4000));
+
+          while (done == false) {
+            const matchCall = await fetch("https://api-client.ontops.link/api/process-code/captcha/math");
+            const dataToCheck = await matchCall.json();
+
+            function showOption(imgUrl) {
+              return new Promise(resolve => {
+                img.src = imgUrl;
+                btnA.onclick = () => resolve(dataToCheck.answers[0]);
+                btnB.onclick = () => resolve(dataToCheck.answers[1]);
+                btnC.onclick = () => resolve(dataToCheck.answers[2]);
+              });
+            }
+
+            btnA.textContent = `${dataToCheck.answers[0]}`;
+            btnB.textContent = `${dataToCheck.answers[1]}`;
+            btnC.textContent = `${dataToCheck.answers[2]}`;
+
+            const trueAnswerToSend = await showOption(`data:image/png;base64,${dataToCheck.imageBase64}`);
+
+            const payloadOfCheck = {
+              "Token": dataToCheck.token,
+              "Answer": `${trueAnswerToSend}`,
+              "rid": randomcode
+            }
+
+            const checkAnswer = await fetch("https://api-client.ontops.link/api/process-code/captcha/check", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payloadOfCheck)
+            });
+
+            if (checkAnswer.status === 400) {
+              await new Promise(r => setTimeout(r, 500));
+
+              continue;
+            }
+
+            const dataCode = await checkAnswer.json();
+            for (var nAn = 0; nAn < 10; nAn++) {
+              console.log(nAn, location.hostname, data.code);
+            };
+            done = true;
+          }
+        })
+      })
+      .catch(err => console.error("Error:", err));
+  }, o.headers.get('Cd') * 1e3);
+};
+sus();
+*/
+
+/* 
+//dr.ontops.link
+async function sus() {
+  var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
+
+  var o = await fetch("https://drapi-client.ontops.link/api/process-code/ping", {
+    method: 'OPTIONS',
+    cache: "no-cache",
+    headers: { Rid: randomcode }
+  });
+
+  const cod = v(o.headers.get('Time'));
+
+  let clientInfo = {
+    a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
+    scrren: "1746 × 982",
+    brower_name: "Chromium",
+    brower_version: "143",
+    os_name: "Windows",
+    os_version: "10.0",
+    href: window.location.href,
+    user_agent: navigator.userAgent,
+    hostname: "https://" + window.location.hostname,
+    code: `${cod}`,
+    code_version: (((cod + 4) * 3) - 10).toString()
+  };
+
+  const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
+
+  setTimeout(() => {
+
+    fetch(`https://drapi-client.ontops.link/api/process-code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
+      method: "GET",
+      cache: "no-cache",
+    }).then(res => res.text())
+      .then(async (code) => {
+        new Function(code)();
+        await new Promise(resolve => setTimeout(resolve, 4000));
+        await fetch("https://drapi-client.ontops.link/api/process-code/create-code", {
+          method: "POST",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+            "Content-Key": contenKey,
+            Rid: randomcode
+          },
+          body: JSON.stringify(clientInfo)
+        }).then(res => res.json()).then(async (data) => {
+          let done = false;
+          const box = document.createElement('div');
+          box.style.cssText = 'position:fixed; top:10px; right:10px; z-index:2147483647; background:#fff; border:1px solid #ccc; padding:8px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.3);';
+          const img = document.createElement('img');
+          img.style.cssText = 'width:200px; display:block; margin-bottom:6px; border:1px solid #fff;';
+          const btnRow = document.createElement('div');
+          btnRow.style.cssText = 'display:flex; gap:6px;';
+          const btnA = document.createElement('button');
+          btnA.textContent = 'A';
+          const btnB = document.createElement('button');
+          btnB.textContent = 'B';
+          const btnC = document.createElement('button');
+          btnC.textContent = 'C';
+          const btnStyle = 'border:2px solid #fff; border-radius:4px; padding:4px 10px; cursor:pointer;';
+          btnA.style.cssText = btnStyle;
+          btnB.style.cssText = btnStyle;
+          btnC.style.cssText = btnStyle;
+
+          btnRow.append(btnA, btnB, btnC);
+          box.append(img, btnRow);
+          document.body.appendChild(box);
+
+          await new Promise(resolve => setTimeout(resolve, 4000));
+
+          while (done == false) {
+            const matchCall = await fetch("https://drapi-client.ontops.link/api/process-code/captcha/math");
+            const dataToCheck = await matchCall.json();
+
+            function showOption(imgUrl) {
+              return new Promise(resolve => {
+                img.src = imgUrl;
+                btnA.onclick = () => resolve(dataToCheck.answers[0]);
+                btnB.onclick = () => resolve(dataToCheck.answers[1]);
+                btnC.onclick = () => resolve(dataToCheck.answers[2]);
+              });
+            }
+
+            btnA.textContent = `${dataToCheck.answers[0]}`;
+            btnB.textContent = `${dataToCheck.answers[1]}`;
+            btnC.textContent = `${dataToCheck.answers[2]}`;
+
+            const trueAnswerToSend = await showOption(`data:image/png;base64,${dataToCheck.imageBase64}`);
+
+            const payloadOfCheck = {
+              "Token": dataToCheck.token,
+              "Answer": `${trueAnswerToSend}`,
+              "rid": randomcode
+            }
+
+            const checkAnswer = await fetch("https://drapi-client.ontops.link/api/process-code/captcha/check", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payloadOfCheck)
+            });
+
+            if (checkAnswer.status === 400) {
+              await new Promise(r => setTimeout(r, 500));
+
+              continue;
+            }
+
+            const dataCode = await checkAnswer.json();
+            for (var nAn = 0; nAn < 10; nAn++) {
+              console.log(nAn, location.hostname, data.code);
+            };
+            done = true;
+          }
+        })
+      })
+      .catch(err => console.error("Error:", err));
+  }, o.headers.get('Cd') * 1e3);
+};
+sus();
+*/
+
+/* 
 //toplinks.io
 async function sus() {
   var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
