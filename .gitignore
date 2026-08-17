@@ -3,3 +3,9 @@ test.js
 n.js
 
 .vscode/
+
+test*
+
+node_modules/
+
+package-lock.json

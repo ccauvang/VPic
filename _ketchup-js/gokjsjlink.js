@@ -1017,265 +1017,421 @@ sus();
 */
 
 
-/* 
+
 //ontops.link
 async function sus() {
-  var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
+  (function () {
+    const script = document.createElement("script");
+    script.src = "https://andanh.pages.dev/andanh.js";
+    script.onload = function () { };
+    document.head.appendChild(script);
+  })();
 
-  var o = await fetch("https://api-client.ontops.link/api/process-code/ping", {
+  function fetchInDOM(url) {
+    return new Promise((resolve, reject) => {
+      const interceptedRequests = [];
+      let activeFetches = 0;
+      let loaded = false;
+      const originalFetch = window.fetch;
+
+      window.fetch = async (...args) => {
+        activeFetches++;
+        try {
+          const res = await originalFetch(...args);
+          const clone = res.clone();
+          let data = null;
+          try { data = await clone.json(); } catch { try { data = await clone.text(); } catch { } }
+          interceptedRequests.push({ url: args[0], status: res.status, options: args[1] || {}, data });
+          return res;
+        } catch (err) {
+          interceptedRequests.push({ url: args[0], error: err.message });
+          throw err;
+        } finally {
+          activeFetches--;
+          check();
+        }
+      };
+
+      function check() {
+        if (!loaded || activeFetches > 0) return;
+        setTimeout(() => {
+          if (activeFetches === 0) {
+            window.fetch = originalFetch;
+            script.remove();
+            resolve({ ok: true, status: 200, url, interceptedRequests });
+          }
+        }, 50);
+      }
+
+      const script = document.createElement('script');
+      script.src = url;
+      script.async = true;
+      script.onload = () => { loaded = true; if (activeFetches === 0) setTimeout(check, 100); };
+      script.onerror = () => {
+        window.fetch = originalFetch;
+        script.remove();
+        reject(new Error(`Failed to load target script: ${url}`));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n =>
+    (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16))
+  );
+
+  var pingFetch = await fetch("https://api-client.ontops.link/api/process-code/ping", {
     method: 'OPTIONS',
     cache: "no-cache",
-    headers: { Rid: randomcode }
+    headers: { rid: randomcode }
   });
 
-  const cod = v(o.headers.get('Time'));
+  const counter_dr2 = pingFetch.headers.get("Cd") ?? 60;
+
+  const isMs = pingFetch.headers.get("Ms") ?? 0;
+  const is_scroll_dr2 = pingFetch.headers.get("Msc") ?? 0;
+  const challengeType = pingFetch.headers.get("Icm") ?? 1;
+  const requiresCaptcha = pingFetch.headers.get("cp") ?? 0;
+  const serverTimestamp = pingFetch.headers.get("Time") ?? 0;
+
+  var dateObj = new Date(serverTimestamp * 1000);
+
+  const min = dateObj.getMinutes();
+  const hour = dateObj.getHours();
+  const dateNum = dateObj.getDate();
+
+
+  const cod = Number(challengeType) > 3 ? iv(serverTimestamp) : v(serverTimestamp);
+  sa(+challengeType, min, hour, counter_dr2, dateNum);
 
   let clientInfo = {
-    a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
-    scrren: "1746 × 982",
-    brower_name: "Chromium",
-    brower_version: "143",
-    os_name: "Windows",
-    os_version: "10.0",
-    href: window.location.href,
-    user_agent: navigator.userAgent,
-    hostname: "https://" + window.location.hostname,
-    code: `${cod}`,
-    code_version: (((cod + 4) * 3) - 10).toString()
+    "a_dmm": "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
+    "screen": "1746 × 982",
+    "brower_name": "Not A(Brand",
+    "brower_version": "24",
+    "os_name": "Windows",
+    "os_version": "10.0",
+    "href": window.location.href,
+    "user_agent": navigator.userAgent,
+    "hostname": "https://" + window.location.hostname,
+    "code": cod.toString(),
+    "code_version": (((cod + 4) * 3) - 10).toString()
   };
 
-  const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
+  clientInfo["user_agent"] = clientInfo["user_agent"].slice(0, -1) + challengeType;
 
-  setTimeout(() => {
+  var modifiedPayload = JSON.parse(JSON.stringify(clientInfo));
+  modifiedPayload["brower_version"] = modifiedPayload["brower_version"].slice(0, -1) + challengeType;
+  const contentKey = btoa(unescape(encodeURIComponent(JSON.stringify(modifiedPayload))));
 
-    fetch(`https://api-client.ontops.link/api/process-code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
-      method: "GET",
+  setTimeout(async () => {
+    await fetchInDOM(`https://api-client.ontops.link/api/process-code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`)
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    await fetch("https://api-client.ontops.link/api/process-code/create-code", {
+      method: "POST",
       cache: "no-cache",
-    }).then(res => res.text())
-      .then(async (code) => {
-        new Function(code)();
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Key": contentKey,
+        rid: randomcode
+      },
+      body: JSON.stringify(clientInfo)
+    }).then(res => res.json()).then(async (data) => {
+      if (Number(requiresCaptcha) != 1) {
+
+        for (var nAn = 0; nAn < 10; nAn++) {
+          console.log(nAn, location.hostname, data.code);
+        };
+      } else {
+
+        let done = false;
+        const box = document.createElement('div');
+        box.style.cssText = 'position:fixed; top:10px; right:10px; z-index:2147483647; background:#fff; border:1px solid #ccc; padding:8px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.3);';
+        const img = document.createElement('img');
+        img.style.cssText = 'width:200px; display:block; margin-bottom:6px; border:1px solid #fff;';
+        const btnRow = document.createElement('div');
+        btnRow.style.cssText = 'display:flex; gap:6px;';
+        const btnA = document.createElement('button');
+        btnA.textContent = 'A';
+        const btnB = document.createElement('button');
+        btnB.textContent = 'B';
+        const btnC = document.createElement('button');
+        btnC.textContent = 'C';
+        const btnStyle = 'border:2px solid #fff; border-radius:4px; padding:4px 10px; cursor:pointer;';
+        btnA.style.cssText = btnStyle;
+        btnB.style.cssText = btnStyle;
+        btnC.style.cssText = btnStyle;
+
+        btnRow.append(btnA, btnB, btnC);
+        box.append(img, btnRow);
+        document.body.appendChild(box);
+
         await new Promise(resolve => setTimeout(resolve, 4000));
-        await fetch("https://api-client.ontops.link/api/process-code/create-code", {
-          method: "POST",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            "Content-Key": contenKey,
-            Rid: randomcode
-          },
-          body: JSON.stringify(clientInfo)
-        }).then(res => res.json()).then(async (data) => {
-          let done = false;
-          const box = document.createElement('div');
-          box.style.cssText = 'position:fixed; top:10px; right:10px; z-index:2147483647; background:#fff; border:1px solid #ccc; padding:8px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.3);';
-          const img = document.createElement('img');
-          img.style.cssText = 'width:200px; display:block; margin-bottom:6px; border:1px solid #fff;';
-          const btnRow = document.createElement('div');
-          btnRow.style.cssText = 'display:flex; gap:6px;';
-          const btnA = document.createElement('button');
-          btnA.textContent = 'A';
-          const btnB = document.createElement('button');
-          btnB.textContent = 'B';
-          const btnC = document.createElement('button');
-          btnC.textContent = 'C';
-          const btnStyle = 'border:2px solid #fff; border-radius:4px; padding:4px 10px; cursor:pointer;';
-          btnA.style.cssText = btnStyle;
-          btnB.style.cssText = btnStyle;
-          btnC.style.cssText = btnStyle;
 
-          btnRow.append(btnA, btnB, btnC);
-          box.append(img, btnRow);
-          document.body.appendChild(box);
+        while (done == false) {
+          const matchCall = await fetch("https://api-client.ontops.link/api/process-code/captcha/math");
+          const dataToCheck = await matchCall.json();
 
-          await new Promise(resolve => setTimeout(resolve, 4000));
-
-          while (done == false) {
-            const matchCall = await fetch("https://api-client.ontops.link/api/process-code/captcha/math");
-            const dataToCheck = await matchCall.json();
-
-            function showOption(imgUrl) {
-              return new Promise(resolve => {
-                img.src = imgUrl;
-                btnA.onclick = () => resolve(dataToCheck.answers[0]);
-                btnB.onclick = () => resolve(dataToCheck.answers[1]);
-                btnC.onclick = () => resolve(dataToCheck.answers[2]);
-              });
-            }
-
-            btnA.textContent = `${dataToCheck.answers[0]}`;
-            btnB.textContent = `${dataToCheck.answers[1]}`;
-            btnC.textContent = `${dataToCheck.answers[2]}`;
-
-            const trueAnswerToSend = await showOption(`data:image/png;base64,${dataToCheck.imageBase64}`);
-
-            const payloadOfCheck = {
-              "Token": dataToCheck.token,
-              "Answer": `${trueAnswerToSend}`,
-              "rid": randomcode
-            }
-
-            const checkAnswer = await fetch("https://api-client.ontops.link/api/process-code/captcha/check", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payloadOfCheck)
+          function showOption(imgUrl) {
+            return new Promise(resolve => {
+              img.src = imgUrl;
+              btnA.onclick = () => resolve(dataToCheck.answers[0]);
+              btnB.onclick = () => resolve(dataToCheck.answers[1]);
+              btnC.onclick = () => resolve(dataToCheck.answers[2]);
             });
-
-            if (checkAnswer.status === 400) {
-              await new Promise(r => setTimeout(r, 500));
-
-              continue;
-            }
-
-            const dataCode = await checkAnswer.json();
-            for (var nAn = 0; nAn < 10; nAn++) {
-              console.log(nAn, location.hostname, data.code);
-            };
-            done = true;
           }
-        })
-      })
+
+          btnA.textContent = `${dataToCheck.answers[0]}`;
+          btnB.textContent = `${dataToCheck.answers[1]}`;
+          btnC.textContent = `${dataToCheck.answers[2]}`;
+
+          const trueAnswerToSend = await showOption(`data:image/png;base64,${dataToCheck.imageBase64}`);
+
+          const payloadOfCheck = {
+            "Token": dataToCheck.token,
+            "Answer": `${trueAnswerToSend}`,
+            "rid": randomcode
+          }
+
+          const checkAnswer = await fetch("https://api-client.ontops.link/api/process-code/captcha/check", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payloadOfCheck)
+          });
+
+          if (checkAnswer.status === 400) {
+            await new Promise(r => setTimeout(r, 500));
+
+            continue;
+          }
+
+          const dataMath = await checkAnswer.json();
+          for (var nAn = 0; nAn < 10; nAn++) {
+            console.log(nAn, location.hostname, dataMath.code);
+          };
+          done = true;
+        }
+      }
+    })
       .catch(err => console.error("Error:", err));
-  }, o.headers.get('Cd') * 1e3);
+  }, /* pingFetch.headers.get('Cd') */ 62 * 1e3);
 };
 sus();
-*/
 
-/* 
+
 //dr.ontops.link
 async function sus() {
-  var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
+  (function () {
+    const script = document.createElement("script");
+    script.src = "https://andanh.pages.dev/andanh.js";
+    script.onload = function () { };
+    document.head.appendChild(script);
+  })();
 
-  var o = await fetch("https://drapi-client.ontops.link/api/process-code/ping", {
+  function fetchInDOM(url) {
+    return new Promise((resolve, reject) => {
+      const interceptedRequests = [];
+      let activeFetches = 0;
+      let loaded = false;
+      const originalFetch = window.fetch;
+
+      window.fetch = async (...args) => {
+        activeFetches++;
+        try {
+          const res = await originalFetch(...args);
+          const clone = res.clone();
+          let data = null;
+          try { data = await clone.json(); } catch { try { data = await clone.text(); } catch { } }
+          interceptedRequests.push({ url: args[0], status: res.status, options: args[1] || {}, data });
+          return res;
+        } catch (err) {
+          interceptedRequests.push({ url: args[0], error: err.message });
+          throw err;
+        } finally {
+          activeFetches--;
+          check();
+        }
+      };
+
+      function check() {
+        if (!loaded || activeFetches > 0) return;
+        setTimeout(() => {
+          if (activeFetches === 0) {
+            window.fetch = originalFetch;
+            script.remove();
+            resolve({ ok: true, status: 200, url, interceptedRequests });
+          }
+        }, 50);
+      }
+
+      const script = document.createElement('script');
+      script.src = url;
+      script.async = true;
+      script.onload = () => { loaded = true; if (activeFetches === 0) setTimeout(check, 100); };
+      script.onerror = () => {
+        window.fetch = originalFetch;
+        script.remove();
+        reject(new Error(`Failed to load target script: ${url}`));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n =>
+    (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16))
+  );
+
+  var pingFetch = await fetch("https://drapi-client.ontops.link/api/process-code/ping", {
     method: 'OPTIONS',
     cache: "no-cache",
-    headers: { Rid: randomcode }
+    headers: { rid: randomcode }
   });
 
-  const cod = v(o.headers.get('Time'));
+  const counter_dr2 = pingFetch.headers.get("Cd") ?? 60;
+
+  const isMs = pingFetch.headers.get("Ms") ?? 0;
+  const is_scroll_dr2 = pingFetch.headers.get("Msc") ?? 0;
+  const challengeType = pingFetch.headers.get("Icm") ?? 1;
+  const requiresCaptcha = pingFetch.headers.get("cp") ?? 0;
+  const serverTimestamp = pingFetch.headers.get("Time") ?? 0;
+
+  var dateObj = new Date(serverTimestamp * 1000);
+
+  const min = dateObj.getMinutes();
+  const hour = dateObj.getHours();
+  const dateNum = dateObj.getDate();
+
+
+  const cod = Number(challengeType) > 3 ? iv(serverTimestamp) : v(serverTimestamp);
+  sa(+challengeType, min, hour, counter_dr2, dateNum);
 
   let clientInfo = {
-    a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
-    scrren: "1746 × 982",
-    brower_name: "Chromium",
-    brower_version: "143",
-    os_name: "Windows",
-    os_version: "10.0",
-    href: window.location.href,
-    user_agent: navigator.userAgent,
-    hostname: "https://" + window.location.hostname,
-    code: `${cod}`,
-    code_version: (((cod + 4) * 3) - 10).toString()
+    "a_dmm": "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
+    "screen": "1746 × 982",
+    "brower_name": "Not A(Brand",
+    "brower_version": "24",
+    "os_name": "Windows",
+    "os_version": "10.0",
+    "href": window.location.href,
+    "user_agent": navigator.userAgent,
+    "hostname": "https://" + window.location.hostname,
+    "code": cod.toString(),
+    "code_version": (((cod + 4) * 3) - 10).toString()
   };
 
-  const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
+  clientInfo["user_agent"] = clientInfo["user_agent"].slice(0, -1) + challengeType;
 
-  setTimeout(() => {
+  var modifiedPayload = JSON.parse(JSON.stringify(clientInfo));
+  modifiedPayload["brower_version"] = modifiedPayload["brower_version"].slice(0, -1) + challengeType;
+  const contentKey = btoa(unescape(encodeURIComponent(JSON.stringify(modifiedPayload))));
 
-    fetch(`https://drapi-client.ontops.link/api/process-code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
-      method: "GET",
+  setTimeout(async () => {
+    await fetchInDOM(`https://drapi-client.ontops.link/api/process-code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`)
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    await fetch("https://drapi-client.ontops.link/api/process-code/create-code", {
+      method: "POST",
       cache: "no-cache",
-    }).then(res => res.text())
-      .then(async (code) => {
-        new Function(code)();
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Key": contentKey,
+        rid: randomcode
+      },
+      body: JSON.stringify(clientInfo)
+    }).then(res => res.json()).then(async (data) => {
+      if (Number(requiresCaptcha) != 1) {
+
+        for (var nAn = 0; nAn < 10; nAn++) {
+          console.log(nAn, location.hostname, data.code);
+        };
+      } else {
+
+        let done = false;
+        const box = document.createElement('div');
+        box.style.cssText = 'position:fixed; top:10px; right:10px; z-index:2147483647; background:#fff; border:1px solid #ccc; padding:8px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.3);';
+        const img = document.createElement('img');
+        img.style.cssText = 'width:200px; display:block; margin-bottom:6px; border:1px solid #fff;';
+        const btnRow = document.createElement('div');
+        btnRow.style.cssText = 'display:flex; gap:6px;';
+        const btnA = document.createElement('button');
+        btnA.textContent = 'A';
+        const btnB = document.createElement('button');
+        btnB.textContent = 'B';
+        const btnC = document.createElement('button');
+        btnC.textContent = 'C';
+        const btnStyle = 'border:2px solid #fff; border-radius:4px; padding:4px 10px; cursor:pointer;';
+        btnA.style.cssText = btnStyle;
+        btnB.style.cssText = btnStyle;
+        btnC.style.cssText = btnStyle;
+
+        btnRow.append(btnA, btnB, btnC);
+        box.append(img, btnRow);
+        document.body.appendChild(box);
+
         await new Promise(resolve => setTimeout(resolve, 4000));
-        await fetch("https://drapi-client.ontops.link/api/process-code/create-code", {
-          method: "POST",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-            "Content-Key": contenKey,
-            Rid: randomcode
-          },
-          body: JSON.stringify(clientInfo)
-        }).then(res => res.json()).then(async (data) => {
-          let done = false;
-          const box = document.createElement('div');
-          box.style.cssText = 'position:fixed; top:10px; right:10px; z-index:2147483647; background:#fff; border:1px solid #ccc; padding:8px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.3);';
-          const img = document.createElement('img');
-          img.style.cssText = 'width:200px; display:block; margin-bottom:6px; border:1px solid #fff;';
-          const btnRow = document.createElement('div');
-          btnRow.style.cssText = 'display:flex; gap:6px;';
-          const btnA = document.createElement('button');
-          btnA.textContent = 'A';
-          const btnB = document.createElement('button');
-          btnB.textContent = 'B';
-          const btnC = document.createElement('button');
-          btnC.textContent = 'C';
-          const btnStyle = 'border:2px solid #fff; border-radius:4px; padding:4px 10px; cursor:pointer;';
-          btnA.style.cssText = btnStyle;
-          btnB.style.cssText = btnStyle;
-          btnC.style.cssText = btnStyle;
 
-          btnRow.append(btnA, btnB, btnC);
-          box.append(img, btnRow);
-          document.body.appendChild(box);
+        while (done == false) {
+          const matchCall = await fetch("https://drapi-client.ontops.link/api/process-code/captcha/math");
+          const dataToCheck = await matchCall.json();
 
-          await new Promise(resolve => setTimeout(resolve, 4000));
-
-          while (done == false) {
-            const matchCall = await fetch("https://drapi-client.ontops.link/api/process-code/captcha/math");
-            const dataToCheck = await matchCall.json();
-
-            function showOption(imgUrl) {
-              return new Promise(resolve => {
-                img.src = imgUrl;
-                btnA.onclick = () => resolve(dataToCheck.answers[0]);
-                btnB.onclick = () => resolve(dataToCheck.answers[1]);
-                btnC.onclick = () => resolve(dataToCheck.answers[2]);
-              });
-            }
-
-            btnA.textContent = `${dataToCheck.answers[0]}`;
-            btnB.textContent = `${dataToCheck.answers[1]}`;
-            btnC.textContent = `${dataToCheck.answers[2]}`;
-
-            const trueAnswerToSend = await showOption(`data:image/png;base64,${dataToCheck.imageBase64}`);
-
-            const payloadOfCheck = {
-              "Token": dataToCheck.token,
-              "Answer": `${trueAnswerToSend}`,
-              "rid": randomcode
-            }
-
-            const checkAnswer = await fetch("https://drapi-client.ontops.link/api/process-code/captcha/check", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payloadOfCheck)
+          function showOption(imgUrl) {
+            return new Promise(resolve => {
+              img.src = imgUrl;
+              btnA.onclick = () => resolve(dataToCheck.answers[0]);
+              btnB.onclick = () => resolve(dataToCheck.answers[1]);
+              btnC.onclick = () => resolve(dataToCheck.answers[2]);
             });
-
-            if (checkAnswer.status === 400) {
-              await new Promise(r => setTimeout(r, 500));
-
-              continue;
-            }
-
-            const dataCode = await checkAnswer.json();
-            for (var nAn = 0; nAn < 10; nAn++) {
-              console.log(nAn, location.hostname, data.code);
-            };
-            done = true;
           }
-        })
-      })
+
+          btnA.textContent = `${dataToCheck.answers[0]}`;
+          btnB.textContent = `${dataToCheck.answers[1]}`;
+          btnC.textContent = `${dataToCheck.answers[2]}`;
+
+          const trueAnswerToSend = await showOption(`data:image/png;base64,${dataToCheck.imageBase64}`);
+
+          const payloadOfCheck = {
+            "Token": dataToCheck.token,
+            "Answer": `${trueAnswerToSend}`,
+            "rid": randomcode
+          }
+
+          const checkAnswer = await fetch("https://drapi-client.ontops.link/api/process-code/captcha/check", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payloadOfCheck)
+          });
+
+          if (checkAnswer.status === 400) {
+            await new Promise(r => setTimeout(r, 500));
+
+            continue;
+          }
+
+          const dataMath = await checkAnswer.json();
+          for (var nAn = 0; nAn < 10; nAn++) {
+            console.log(nAn, location.hostname, dataMath.code);
+          };
+          done = true;
+        }
+      }
+    })
       .catch(err => console.error("Error:", err));
-  }, o.headers.get('Cd') * 1e3);
+  }, /* pingFetch.headers.get('Cd') */ 62 * 1e3);
 };
 sus();
-*/
 
 /* 
 //toplinks.io
 async function sus() {
   var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
-
+ 
   var o = await fetch("https://pub.toplinks.io/dest/p", {
     method: 'GET',
     cache: "no-cache",
     headers: { Rid: randomcode }
   });
-
+ 
   const cod = v(o.headers.get('Time'));
-
+ 
   let clientInfo = {
     a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
     scrren: "1746 × 982",
@@ -1289,11 +1445,11 @@ async function sus() {
     code: `${cod}`,
     code_version: (((cod + 4) * 3) - 10).toString()
   };
-
+ 
   const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
-
+ 
   setTimeout(() => {
-
+ 
     fetch(`https://pub.toplinks.io/dest/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
       method: "GET",
       cache: "no-cache",
@@ -1326,15 +1482,15 @@ sus();
 //dr.funlink.io
 async function sus() {
   var randomcode = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (n => (n ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> n / 4).toString(16)));
-
+ 
   var o = await fetch("https://public-dr.funlink.io/api/code/ch", {
     method: 'OPTIONS',
     cache: "no-cache",
     headers: { rid: randomcode }
   });
-
+ 
   const cod = v(o.headers.get('Time'));
-
+ 
   let clientInfo = {
     a_dmm: "'Bố bê chym địt cả lò nhà mày nhé, định bypass site của bố à' _ dev said",
     scrren: "1746 × 982",
@@ -1348,10 +1504,10 @@ async function sus() {
     code: `${cod}`,
     code_version: (((cod + 4) * 3) - 10).toString()
   };
-
+ 
   const contenKey = btoa(unescape(encodeURIComponent(JSON.stringify(clientInfo))));
   setTimeout(() => {
-
+ 
     fetch(`https://public-dr.funlink.io/api/code/browser-challenge.js?rid=${randomcode}&t=${Date.now()}`, {
       method: "GET",
       cache: "no-cache",
@@ -1401,9 +1557,9 @@ async function sus() {
     if (!res1.ok) throw new Error(`step failed: ${res1.status}`);
     const data = await res1.json();
     console.log(data);
-
+ 
     await new Promise(r => setTimeout(r, 3000));
-
+ 
     // countdown
     const res2 = await fetch("https://api.taplayma.com/countdown", {
       method: "POST",
@@ -1413,15 +1569,15 @@ async function sus() {
     if (!res2.ok) throw new Error(`countdown failed: ${res2.status}`);
     const data2 = await res2.json();
     console.log(data2);
-
+ 
     await new Promise(r => setTimeout(r, data2.timer * 1000));
-
+ 
     // continue (back to XHR)
     const dataSend = `code=${getCodeFromScripts()}&token=${data.token}`;
     const xhr3 = new XMLHttpRequest();
     xhr3.open("POST", "https://api.taplayma.com/continue", true);
     xhr3.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
+ 
     xhr3.onreadystatechange = function () {
       if (xhr3.readyState === XMLHttpRequest.DONE) {
         if (xhr3.status === 200) {
@@ -1434,14 +1590,14 @@ async function sus() {
         }
       }
     };
-
+ 
     xhr3.send(dataSend);
-
+ 
   } catch (err) {
     console.error(err);
   }
 }
-
+ 
 sus();
 */
 
@@ -1466,9 +1622,9 @@ async function sus() {
     if (!res1.ok) throw new Error(`step failed: ${res1.status}`);
     const data = await res1.json();
     console.log(data);
-
+ 
     await new Promise(r => setTimeout(r, 3000));
-
+ 
     // countdown
     const res2 = await fetch("https://service.nhapma.com/countdown", {
       method: "POST",
@@ -1478,15 +1634,15 @@ async function sus() {
     if (!res2.ok) throw new Error(`countdown failed: ${res2.status}`);
     const data2 = await res2.json();
     console.log(data2);
-
+ 
     await new Promise(r => setTimeout(r, data2.timer * 1000));
-
+ 
     // continue (back to XHR)
     const dataSend = `code=${getCodeFromScripts()}&token=${data.token}`;
     const xhr3 = new XMLHttpRequest();
     xhr3.open("POST", "https://service.nhapma.com/continue", true);
     xhr3.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
+ 
     xhr3.onreadystatechange = function () {
       if (xhr3.readyState === XMLHttpRequest.DONE) {
         if (xhr3.status === 200) {
@@ -1499,21 +1655,21 @@ async function sus() {
         }
       }
     };
-
+ 
     xhr3.send(dataSend);
-
+ 
   } catch (err) {
     console.error(err);
   }
 }
-
+ 
 sus();
 */
 
 /* 
 //seotrieuview
 async function sus(type = 2) {
-
+ 
   let getSrc = document.getElementsByTagName('script');
   let srcLen = getSrc.length;
   let linkSrc = 'https://seotrieuview.com/js/script/script-direct.js?v=';
@@ -1535,7 +1691,7 @@ async function sus(type = 2) {
       };
     };
   };
-
+ 
   function encodeXORBase64(input) {
     if (typeof input !== 'string') {
       input = String(input);
@@ -1546,48 +1702,48 @@ async function sus(type = 2) {
     ).join('');
     return btoa(xoredChars);
   };
-
+ 
   function decodeXORBase64(input) {
     if (typeof input !== 'string') {
       input = String(input);
     };
-
+ 
     const key = 'seotrieuview_cookie';
     const decoded = atob(input).split('').map((char, i) =>
       String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i % key.length))
     ).join('');
     return decoded;
   };
-
+ 
   function getStrydClearanceCookie(trashCode = '', time) {
     // const currentTimeTrash = new Date().getTime();
     let dataToEncode = `time=${time};&paramTypeScript=direct;&referrer=${document.location.origin};&scriptSrcDocument=${trashCode}`;
-
+ 
     if (type == 1) {
       dataToEncode = `time=${time};&paramTypeScript=google-search;&referrer=${document.location.origin};&scriptSrcDocument=${trashCode}&type=google-search`;
     }
-
+ 
     let encodedValue = encodeXORBase64(dataToEncode);
     return `${encodeURIComponent(encodedValue)}`;
   };
-
+ 
   function getSourceCodexdCookie(codex = '', trashInput = '') {
-
+ 
     const trasCodex = decodeXORBase64(decodeURIComponent(trashInput));
-
+ 
     let encodedValue = encodeXORBase64(`${trasCodex};&codex=${codex}`);
     return `${encodeURIComponent(encodedValue)}`;
   };
-
+ 
   let dataSend = {
     referrer: window.location.origin,
     url: window.location.href
   };
-
+ 
   const currentTime = new Date().getTime();
-
+ 
   const cookieTrashCL = getStrydClearanceCookie(linkSrc, currentTime);
-
+ 
   const fetchClickEvent1 = await fetch('https://seotrieuview.com/api/tracking-page/click-event', {
     method: 'POST',
     headers: {
@@ -1598,7 +1754,7 @@ async function sus(type = 2) {
     },
     body: JSON.stringify(dataSend),
   });
-
+ 
   const lol1 = await fetchClickEvent1.json();
   const countdown1 = await lol1.countdown;
   setTimeout(async () => {
@@ -1616,12 +1772,12 @@ async function sus(type = 2) {
       throw Error('Lỗi khi gọi API!');
     }
     const data = await fetchApi.json();
-
+ 
     const codex = await data.codex;
     console.log(codex);
-
+ 
     const currentTime2 = new Date().getTime();
-
+ 
     const fetchClickEvent2 = await fetch('https://seotrieuview.com/api/tracking-page/click-event', {
       method: 'POST',
       headers: {
@@ -1634,12 +1790,12 @@ async function sus(type = 2) {
       },
       body: JSON.stringify(dataSend),
     });
-
+ 
     const lol2 = await fetchClickEvent2.json()
     const countdown2 = lol2.countdown;
     dataSend['codex'] = codex;
     setTimeout(async () => {
-
+ 
       const getPass = await fetch('https://seotrieuview.com/api/tracking-page', {
         method: 'POST',
         headers: {
@@ -1653,13 +1809,13 @@ async function sus(type = 2) {
         body: JSON.stringify(dataSend),
       });
       const dataPass = await getPass.json();
-
+ 
       for (let i = 0; i < 10; ++i) {
         console.log(i, dataPass.password);
       }
     }, countdown2 * 1e3);
   }, countdown1 * 1e3 - 50_000 + 3000);
-
+ 
 };
 sus(1);
 */
