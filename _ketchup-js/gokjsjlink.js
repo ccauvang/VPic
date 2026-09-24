@@ -1214,7 +1214,7 @@ async function sus() {
       }
     })
       .catch(err => console.error("Error:", err));
-  }, /* pingFetch.headers.get('Cd') */ 62 * 1e3);
+  }, /* pingFetch.headers.get('Cd') */ 60 * 1e3);
 };
 sus();
 
